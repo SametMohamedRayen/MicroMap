@@ -1,1 +1,75 @@
-<p>Calls Work</p>
+<div class="row">
+<div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"> List Of All Available Calls</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>
+                Issuer/Producer
+              </th>
+              <th >
+                Target/Consumer
+              </th>
+              <th>
+                Type
+              </th>
+              <th>
+                Topic
+              </th>
+              <th>
+                Event Produced
+              </th>
+              <th>
+                API
+              </th>
+              <th>
+                Description
+              </th>
+              
+              
+            </thead>
+            <tbody>
+              <tr *ngFor="let call of calls">
+                <td *ngIf="call.issuer;else noIssuer" >
+                  {{call.issuer}}
+                </td>
+               
+                <td *ngIf="call.target;else noTarget" style="padding-left: 10px;">
+                  {{call.target}}
+                </td>
+                
+                <td *ngIf="call.type;else noType">
+                  {{call.type}}
+                </td>
+                
+                <td *ngIf="call.topic;else noTopic">
+                    {{call.topic}}
+                </td>
+                <td *ngIf="call.eventProduced;else noEventProduced">
+                    {{call.eventProduced}}
+                </td>
+                <td *ngIf="call.api;else noApi">
+                    {{call.api}}
+                </td>
+                <td *ngIf="call.description;else noDescription">
+                    {{call.description}}
+                </td>
+                <ng-template  #noIssuer #noTarget #noType #noTopic #noEventProduced #noApi #noDescription>
+                    <td style="font-size:25px ;">
+                      -
+                    </td>
+                  </ng-template>
+                
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>

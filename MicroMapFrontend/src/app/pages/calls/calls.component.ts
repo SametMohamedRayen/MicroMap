@@ -1,4 +1,6 @@
+import { Call } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { CallsService } from 'app/calls.service';
 
 
 
@@ -9,8 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class CallsComponent implements OnInit{
-   
+   calls : Call[]=[];
+   constructor(private callsService:CallsService){}
     ngOnInit(){
-        
+        this.callsService.getAll().subscribe((response:Call[])=>{
+            this.calls=response;
+        });
     }
+    
 }
