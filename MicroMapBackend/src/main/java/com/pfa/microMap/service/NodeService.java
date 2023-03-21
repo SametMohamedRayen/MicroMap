@@ -50,13 +50,30 @@ public class NodeService {
      * delete a microservice
      * @param name
      */
-    public void delete(String name){
-        if (nodeRepository.existsById(name)){
-        nodeRepository.deleteById(name);}
+    public void delete(String name) {
+        if (nodeRepository.existsById(name)) {
+            nodeRepository.deleteById(name);
+        }
     }
+
+    /**
+     * return a list of all avaiable calls
+     * @return
+     */
     public List<Call> findAllCalls(){
         return this.nodeRepository.findAllCalls();
     }
+
+    /**
+     * add a call relationship
+     * @param startNode
+     * @param endNode
+     * @param type
+     * @param topic
+     * @param eventProduced
+     * @param api
+     * @param description
+     */
     public void addCall(String startNode
             , String endNode ,
                         String type ,
@@ -66,6 +83,16 @@ public class NodeService {
                         String description ){
         this.nodeRepository.addCall(startNode,endNode,type, topic,eventProduced,api,description);
     }
+
+    /**
+     * update an existing call
+     * @param id
+     * @param type
+     * @param topic
+     * @param eventProduced
+     * @param api
+     * @param description
+     */
     public void updateCall(Long id,
                            String type ,
                            String topic,
@@ -74,6 +101,11 @@ public class NodeService {
                            String description){
         this.nodeRepository.updateCall(id,type,topic,eventProduced,api,description);
     }
+
+    /**
+     * Delete A call
+     * @param id
+     */
     public void deleteCall(Long id){
         this.nodeRepository.deleteCall(id);
     }

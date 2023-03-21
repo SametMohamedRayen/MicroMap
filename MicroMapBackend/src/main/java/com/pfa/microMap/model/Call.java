@@ -5,6 +5,7 @@ public class Call {
 
 
     private Long id;
+    
     private String issuer;
     private String target;
     private String type;

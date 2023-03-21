@@ -54,11 +54,11 @@ public class NodeController {
     }
     @PutMapping("/call/{id}")
     public void updateCall(@PathVariable("id")Long id ,
-                           @RequestPart("type")  String type ,
+                           @RequestPart(value = "type",required = false)  String type ,
                            @RequestPart(value = "topic",required = false) String topic,
                            @RequestPart(value = "eventProduced",required = false)  String eventProduced ,
                            @RequestPart(value = "api",required = false)  String api ,
-                           @RequestPart("description")  String description ){
+                           @RequestPart(value = "description",required = false)  String description ){
         this.nodeService.updateCall(id,type,topic,eventProduced,api,description);
     }
     @DeleteMapping("call/{id}")
