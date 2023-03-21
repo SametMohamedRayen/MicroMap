@@ -58,6 +58,9 @@
                 <td *ngIf="call.description;else noDescription">
                     {{call.description}}
                 </td>
+                <td>
+                    <i class="nc-icon nc-basket" (click)=" deleteModel(call.id)" style="color: red;"></i>
+                </td>
                 <ng-template  #noIssuer #noTarget #noType #noTopic #noEventProduced #noApi #noDescription>
                     <td style="font-size:25px ;">
                       -
@@ -72,4 +75,18 @@
       </div>
     </div>
   </div>
+  </div>
+  <div id="id01" class="modal">
+   
+    <form class="modal-content" action="/action_page.php">
+      <div class="container">
+        <h1>Delete Call</h1>
+        <p>Are you sure you want to delete your This Call</p>
+      
+        <div class="clearfix">
+          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+          <button type="button" (click)="deleteCall()" class="deletebtn">Delete</button>
+        </div>
+      </div>
+    </form>
   </div>

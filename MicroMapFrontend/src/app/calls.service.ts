@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CallsService {
+  delete(id: string) :Observable<void> {
+      return this.http.delete<void>(`${this.apiServerUrl}call/${id}`);
+  }
   private apiServerUrl=environment.apiBaseUrl;
   public getAll():Observable<Call[]> {
     return this.http.get<Call[]>(`${this.apiServerUrl}call`);
