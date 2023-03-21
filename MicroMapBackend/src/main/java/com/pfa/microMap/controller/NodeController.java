@@ -49,7 +49,7 @@ public class NodeController {
                         @RequestPart(value = "topic",required = false) String topic,
                         @RequestPart(value = "eventProduced",required = false)  String eventProduced ,
                         @RequestPart(value = "api",required = false)  String api ,
-                        @RequestPart("description")  String description ){
+                        @RequestPart(value = "description",required = false)  String description ){
         this.nodeService.addCall(startNode,endNode,type, topic,eventProduced,api,description);
     }
     @PutMapping("/call/{id}")

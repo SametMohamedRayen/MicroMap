@@ -22,7 +22,7 @@ import { AddNodeComponent } from 'app/pages/add-node/add-node.component';
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
-    NgbModule
+   
   ],
   declarations: [
     CallsComponent,

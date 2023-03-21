@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CallsService {
+  addCall(formData: FormData) :Observable<void> {
+    return this.http.post<void>(`${this.apiServerUrl}call`,formData);
+  }
   delete(id: string) :Observable<void> {
       return this.http.delete<void>(`${this.apiServerUrl}call/${id}`);
   }
