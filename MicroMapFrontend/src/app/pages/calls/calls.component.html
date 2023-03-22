@@ -30,7 +30,7 @@
                 Description
               </th>
               <th></th>
-              
+              <th></th>
               
             </thead>
             <tbody>
@@ -62,6 +62,9 @@
                 <td>
                     <i class="nc-icon nc-basket" (click)=" deleteModel(call.id)" style="color: red;"></i>
                 </td>
+                <td>
+                  <i class="nc-icon nc-refresh-69" (click)=" updateModel(call.id,call.type,call.api,call.topic,call.eventProduced,call.description)" style="color: red;"></i>
+              </td>
                 <ng-template  #noIssuer #noTarget #noType #noTopic #noEventProduced #noApi #noDescription>
                     <td style="font-size:25px ;">
                       -
@@ -77,6 +80,9 @@
     </div>
   </div>
   </div>
+  <!--
+    delete model
+  -->
   <div id="id01" class="modal">
    
     <form class="modal-content" action="/action_page.php">
@@ -90,4 +96,77 @@
         </div>
       </div>
     </form>
+  </div>
+<!--
+  update Model
+-->
+  <div id="updateModel" class="row" style="display:none; position: fixed; bottom: 10%;left: 25%; width: 80%;">
+  
+    <div class="col-md-8">
+      <div class="card card-user">
+        <div class="card-header">
+          <h5 class="card-title">Update Call</h5>
+        </div>
+        <div class="card-body">
+          <form #updateForm="ngForm" (ngSubmit)="updateCall()">
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <label>Call Type</label>
+                  <select id="type" name="type" class="form-control" [(ngModel)]="type"  ngModel>
+                    <option value="sync">Synchronous</option>
+                    <option value="async">Asynchronous</option>
+                    
+                  </select>
+                </div>
+              </div>
+              
+              
+            </div>
+            <div class="row" *ngIf="type=='async'">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Topic</label>
+                  <input type="text" class="form-control" placeholder="Topic" name="topic" ngModel [(ngModel)]="topic">
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Event Produced</label>
+                  <input type="text" class="form-control" placeholder="Event Produced" name="eventProduced" ngModel [(ngModel)]="eventProduced">
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="type=='sync'">
+                <div class="col-md-6 pr-1">
+                  <div class="form-group">
+                    <label>API</label>
+                    <input type="text" class="form-control" placeholder="API" name="api" ngModel [(ngModel)]="api">
+                  </div>
+                </div>
+               
+              </div>
+
+           
+             
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea class="form-control textarea" placeholder="Call Description" ngModel name="description" [(ngModel)]="description"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="update ml-auto mr-auto">
+                
+                <button type="submit" class="btn btn-primary btn-round" [disabled]="updateForm.invalid" style="padding-left: 0px;">Update Call</button>
+                <button   type="button" class="btn btn-danger btn-round" onclick="document.getElementById('updateModel').style.display='none';" style="background-color:red ;" >Cancel</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+ 
   </div>

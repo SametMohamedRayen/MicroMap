@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CallsService {
+  updateCall(id: number, formData:FormData) :Observable<void>{
+    return this.http.put<void>(`${this.apiServerUrl}call/${id}`,formData);
+  }
   addCall(formData: FormData) :Observable<void> {
     return this.http.post<void>(`${this.apiServerUrl}call`,formData);
   }
