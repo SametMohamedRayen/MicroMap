@@ -6,7 +6,7 @@ import { CallsService } from 'app/calls.service';
 
 
 @Component({
-    selector: 'table-cmp',
+    selector: 'calls',
     moduleId: module.id,
     templateUrl: 'calls.component.html',
     styleUrls: ['./calls.component.css']

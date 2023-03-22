@@ -24,6 +24,7 @@ import { FormsModule } from "@angular/forms";
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+   
     RouterModule.forRoot(AppRoutes,{
       useHash: true
     }),

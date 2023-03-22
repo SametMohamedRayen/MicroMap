@@ -13,6 +13,7 @@ export class AddCallComponent implements OnInit{
     constructor(private callService:CallsService){
 
     }
+    options:string[]=['s1','s2','s3','s4'];
     type:string="sync";
   
     addCall(form:NgForm):void{

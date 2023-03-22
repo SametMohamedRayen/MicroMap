@@ -22,14 +22,24 @@
                 <div class="form-group">
                   <label *ngIf="type=='sync'">Issuer</label>
                   <label *ngIf="type=='async'">Producer</label>
-                  <input type="text" class="form-control"  name="startNode" ngModel required>
+                 
+                    <input  list="listStartNode" type="text" class="form-control"  name="startNode" ngModel required  >
+                    <datalist id="listStartNode">
+                      <option *ngFor="let item of options" [value]="item">{{item}}</option>
+                    </datalist>
                 </div>
               </div>
               <div class="col-md-4 pl-1">
                 <div class="form-group">
                     <label *ngIf="type=='sync'">Target</label>
                     <label *ngIf="type=='async'">Consumer</label>
-                  <input type="text" class="form-control" name="endNode" ngModel required>
+                    
+                     
+                      <input  list="listEndNode"   type="text" class="form-control" name="endNode" ngModel required >
+                      <datalist id="listEndNode">
+                        <option *ngFor="let item of options" [value]="item">{{item}}</option>
+                      </datalist>
+                  
                 </div>
               </div>
             </div>
@@ -75,8 +85,10 @@
           </form>
         </div>
       </div>
+
     </div>
  
   </div>
+  
 
   
