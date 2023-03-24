@@ -22,10 +22,10 @@ public interface NodeRepository extends Neo4jRepository <MyNode,String>{
             "r.description AS description")
     public List<Call> findAllCalls();
 
-    @Query("MATCH ()-[r2]->()  WITH count(r2) AS count MATCH (a:NODE), (b:NODE)\n" +
+    @Query(" MATCH (a:NODE), (b:NODE)\n" +
             "WHERE a.name = $startNode AND b.name = $endNode\n" +
             "CREATE (a)-[r:CALLS ]->(b)\n" +
-            "SET r.id = count , r.type = $type, r.topic = $topic , r.eventProduced = $eventProduced , r.api = $api , r.description = $description\n" +
+            "SET r.id = ID(r) , r.type = $type, r.topic = $topic , r.eventProduced = $eventProduced , r.api = $api , r.description = $description\n" +
             "RETURN r")
     public void addCall(String startNode
             , String endNode ,
