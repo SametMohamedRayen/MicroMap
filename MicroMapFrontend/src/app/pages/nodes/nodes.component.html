@@ -1,1 +1,45 @@
-<p>nodes work</p>
+<div class="row">
+    <div class="col-md-12">
+        <div *ngIf="showAlert" class="alert alert-danger alert-dismissible fade show">
+            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+            <span>Node Deleted Successfully</span>
+        </div>
+      <div class="card text-center">
+        <div class="card-header">
+          <h4 class="card-title">List of All Microservices</h4>
+        </div>
+        <div class="card-body">
+          <div class="table">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>
+                  Name
+                </th>
+                <th>
+                  Type
+                </th>
+                <th></th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let node of nodes">
+                  <td>
+                    {{node.name}}
+                  </td>
+                  <td>
+                    {{node.type}}
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-round" (click)="deleteNode(this.node.name)">
+                        Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
