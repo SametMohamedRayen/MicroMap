@@ -25,15 +25,15 @@ export class CallsComponent implements OnInit{
 
    constructor(private callsService:CallsService){}
     ngOnInit(){
-        this.callsService.getAll().subscribe((response:Call[])=>{
+        this.callsService.getAllCalls().subscribe((response:Call[])=>{
             this.calls=response;
         });
     }
     public deleteCall():void{
       
-        this.callsService.delete(this.deleteId).subscribe(()=>
+        this.callsService.deleteCall(this.deleteId).subscribe(()=>
         {
-            this.callsService.getAll().subscribe((response:Call[])=>{
+            this.callsService.getAllCalls().subscribe((response:Call[])=>{
                 this.calls=response;
             });
         });
@@ -80,7 +80,7 @@ export class CallsComponent implements OnInit{
            
             document.getElementById('updateModel').style.display='none';
             alert("Call Updated Successfully");
-            this.callsService.getAll().subscribe((response:Call[])=>{
+            this.callsService.getAllCalls().subscribe((response:Call[])=>{
                 this.calls=response;
             });
             

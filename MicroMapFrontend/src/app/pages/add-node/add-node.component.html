@@ -1,1 +1,45 @@
-<p>Add node works</p>
+<div class="row">
+
+    <div class="col-md-8">
+        <div *ngIf="showAlert" class="alert alert-primary alert-dismissible fade show">
+            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+            <span>Node Added Successfully</span>
+        </div>
+        <div class="card card-user">
+            <div class="card-header">
+                <h5 class="card-title text-center">Add a new MicroService</h5>
+            </div>
+            <div class="card-body">
+                <form #addFormNode (ngSubmit)="addNode(addFormNode)">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" [(ngModel)]="name" class="form-control"
+                                    placeholder="MicroService Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="type">Type</label>
+                                <input type="text" name="type" class="form-control" [(ngModel)]="type"
+                                    placeholder="MicroService Type">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="update ml-auto mr-auto">
+                            <button type="submit" class="btn btn-primary btn-round" [disabled]="addFormNode.invalid">
+                                Add MicroService
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

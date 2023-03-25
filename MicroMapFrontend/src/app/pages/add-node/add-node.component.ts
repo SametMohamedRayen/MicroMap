@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { CallsService } from 'app/calls.service';
 
 @Component({
     selector: 'user-cmp',
@@ -7,6 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class AddNodeComponent implements OnInit{
+    constructor(private callService:CallsService){
+
+    }
+    name: string;
+    type: string;
+    showAlert=false;
+    addNode(form:NgForm):void{
+        const formData = new FormData();
+        formData.append("name",this.name);
+        formData.append("type",this.type);
+        this.callService.addNode(formData).subscribe(()=>{
+            this.showAlert=true;
+            form.reset();
+        })
+
+    }
     ngOnInit(){
     }
 }

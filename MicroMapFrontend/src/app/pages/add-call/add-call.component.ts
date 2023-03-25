@@ -1,3 +1,4 @@
+import { Node } from '@angular/compiler';
 import { Call } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -13,9 +14,9 @@ export class AddCallComponent implements OnInit{
     constructor(private callService:CallsService){
 
     }
-    options:string[]=['s1','s2','s3','s4'];
+    options:string[];
     type:string="sync";
-  
+    showAlert=false;
     addCall(form:NgForm):void{
         const formData = new FormData();
         formData.append("startNode",form.value.startNode);
@@ -33,8 +34,7 @@ export class AddCallComponent implements OnInit{
         }
         formData.append("description",form.value.description);
         this.callService.addCall(formData).subscribe(()=>{
-           
-            alert("Call Added Successfully");
+            this.showAlert=true;
             form.reset();
             this.type='sync'
             
@@ -45,5 +45,8 @@ export class AddCallComponent implements OnInit{
         
     }
     ngOnInit(){
+        this.callService.getAllNodesNames().subscribe((res)=>{
+            this.options=res;
+        });
     }
 }
