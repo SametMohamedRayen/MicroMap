@@ -1,5 +1,10 @@
 <div class="row text-center">
-<div class="col-md-12">
+  <div class="col-md-12">
+    <div *ngIf="showAlert" class="alert alert-primary alert-dismissible fade show">
+      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      </button>
+      <span>Call Updated Successfully</span>
+    </div>
     <div class="card">
       <div class="card-header">
         <h4 class="card-title"> List Of All Available Calls</h4>
@@ -11,7 +16,7 @@
               <th>
                 Issuer/Producer
               </th>
-              <th >
+              <th>
                 Target/Consumer
               </th>
               <th>
@@ -31,142 +36,152 @@
               </th>
               <th></th>
               <th></th>
-              
+
             </thead>
             <tbody>
               <tr *ngFor="let call of calls">
-                <td *ngIf="call.issuer;else noIssuer" >
+                <td *ngIf="call.issuer;else noIssuer">
                   {{call.issuer}}
                 </td>
-               
+
                 <td *ngIf="call.target;else noTarget" style="padding-left: 10px;">
                   {{call.target}}
                 </td>
-                
+
                 <td *ngIf="call.type;else noType">
                   {{call.type}}
                 </td>
-                
+
                 <td *ngIf="call.topic;else noTopic">
-                    {{call.topic}}
+                  {{call.topic}}
                 </td>
                 <td *ngIf="call.eventProduced;else noEventProduced">
-                    {{call.eventProduced}}
+                  {{call.eventProduced}}
                 </td>
                 <td *ngIf="call.api;else noApi">
-                    {{call.api}}
+                  {{call.api}}
                 </td>
                 <td *ngIf="call.description;else noDescription">
-                    {{call.description}}
+                  {{call.description}}
                 </td>
                 <td>
-                    <i class="nc-icon nc-basket" (click)=" deleteModel(call.id)" style="color: red;"></i>
+                  <button type="button" class="btn btn-danger btn-round" (click)="deleteModel(call.id)">
+                    Delete
+                </button>
                 </td>
                 <td>
-                  <i class="nc-icon nc-refresh-69" (click)=" updateModel(call.id,call.type,call.api,call.topic,call.eventProduced,call.description)" style="color: red;"></i>
-              </td>
-                <ng-template  #noIssuer #noTarget #noType #noTopic #noEventProduced #noApi #noDescription>
-                    <td style="font-size:25px ;">
-                      -
-                    </td>
-                  </ng-template>
-                
+                  <button type="button" class="btn btn-primary btn-round" (click)="updateModel(call.id,call.type,call.api,call.topic,call.eventProduced,call.description)">
+                    Update
+                </button>
+                </td>
+                <ng-template #noIssuer #noTarget #noType #noTopic #noEventProduced #noApi #noDescription>
+                  <td style="font-size:25px ;">
+                    -
+                  </td>
+                </ng-template>
+
               </tr>
-              
+
             </tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
-  </div>
-  <!--
+</div>
+<!--
     delete model
   -->
-  <div id="id01" class="modal">
-   
-    <form class="modal-content" action="/action_page.php">
-      <div class="container">
-        <h1>Delete Call</h1>
-        <p>Are you sure you want to delete your This Call</p>
-      
-        <div class="clearfix">
-          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-          <button type="button" (click)="deleteCall()" class="deletebtn">Delete</button>
-        </div>
+<div id="id01" class="modal">
+
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h1>Delete Call</h1>
+      <p>Are you sure you want to delete your This Call</p>
+
+      <div>
+        <button class="btn btn-primary btn-round" type="button" onclick="document.getElementById('id01').style.display='none'"
+          class="cancelbtn">Cancel</button>
+        <button class="btn btn-danger btn-round" type="button" (click)="deleteCall()" class="deletebtn">Delete</button>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
+</div>
 <!--
   update Model
 -->
-  <div id="updateModel" class="row" style="display:none; position: fixed; bottom: 10%;left: 25%; width: 80%;">
-  
-    <div class="col-md-8">
-      <div class="card card-user">
-        <div class="card-header">
-          <h5 class="card-title">Update Call</h5>
-        </div>
-        <div class="card-body">
-          <form #updateForm="ngForm" (ngSubmit)="updateCall()">
-            <div class="row">
-              <div class="col-md-5 pr-1">
-                <div class="form-group">
-                  <label>Call Type</label>
-                  <select id="type" name="type" class="form-control" [(ngModel)]="type"  ngModel>
-                    <option value="sync">Synchronous</option>
-                    <option value="async">Asynchronous</option>
-                    
-                  </select>
-                </div>
-              </div>
-              
-              
-            </div>
-            <div class="row" *ngIf="type=='async'">
-              <div class="col-md-6 pr-1">
-                <div class="form-group">
-                  <label>Topic</label>
-                  <input type="text" class="form-control" placeholder="Topic" name="topic" ngModel [(ngModel)]="topic">
-                </div>
-              </div>
-              <div class="col-md-6 pl-1">
-                <div class="form-group">
-                  <label>Event Produced</label>
-                  <input type="text" class="form-control" placeholder="Event Produced" name="eventProduced" ngModel [(ngModel)]="eventProduced">
-                </div>
-              </div>
-            </div>
-            <div class="row" *ngIf="type=='sync'">
-                <div class="col-md-6 pr-1">
-                  <div class="form-group">
-                    <label>API</label>
-                    <input type="text" class="form-control" placeholder="API" name="api" ngModel [(ngModel)]="api">
-                  </div>
-                </div>
-               
-              </div>
+<div id="updateModel" class="row" style="display:none; position: fixed; bottom: 10%;left: 25%; width: 80%;">
 
-           
-             
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Description</label>
-                  <textarea class="form-control textarea" placeholder="Call Description" ngModel name="description" [(ngModel)]="description"></textarea>
-                </div>
+  <div class="col-md-8">
+    <div class="card card-user">
+      <div class="card-header">
+        <h5 class="card-title">Update Call</h5>
+      </div>
+      <div class="card-body">
+        <form #updateForm="ngForm" (ngSubmit)="updateCall()">
+          <div class="row">
+            <div class="col-md-5 pr-1">
+              <div class="form-group">
+                <label>Call Type</label>
+                <select id="type" name="type" class="form-control" [(ngModel)]="type" ngModel>
+                  <option value="sync">Synchronous</option>
+                  <option value="async">Asynchronous</option>
+
+                </select>
               </div>
             </div>
-            <div class="row">
-              <div class="update ml-auto mr-auto">
-                
-                <button type="submit" class="btn btn-primary btn-round" [disabled]="updateForm.invalid" style="padding-left: 0px;">Update Call</button>
-                <button   type="button" class="btn btn-danger btn-round" onclick="document.getElementById('updateModel').style.display='none';" style="background-color:red ;" >Cancel</button>
+
+
+          </div>
+          <div class="row" *ngIf="type=='async'">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Topic</label>
+                <input type="text" class="form-control" placeholder="Topic" name="topic" ngModel [(ngModel)]="topic">
               </div>
             </div>
-          </form>
-        </div>
+            <div class="col-md-6 pl-1">
+              <div class="form-group">
+                <label>Event Produced</label>
+                <input type="text" class="form-control" placeholder="Event Produced" name="eventProduced" ngModel
+                  [(ngModel)]="eventProduced">
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="type=='sync'">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>API</label>
+                <input type="text" class="form-control" placeholder="API" name="api" ngModel [(ngModel)]="api">
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control textarea" placeholder="Call Description" ngModel name="description"
+                  [(ngModel)]="description"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="update ml-auto mr-auto">
+
+              <button type="submit" class="btn btn-primary btn-round" [disabled]="updateForm.invalid"
+                style="padding-left: 0px;">Update Call</button>
+              <button type="button" class="btn btn-danger btn-round"
+                onclick="document.getElementById('updateModel').style.display='none';"
+                style="background-color:red ;">Cancel</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
- 
   </div>
+
+</div>

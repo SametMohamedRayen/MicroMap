@@ -22,7 +22,10 @@ export class NodesComponent implements OnInit{
 
     deleteNode(name: string){
         this.callService.deleteNode(name).subscribe(()=>{
-            this.showAlert=true;
+            this.showAlert = true;
+            setTimeout(() => {
+                this.showAlert = false;
+            }, 1000);
             this.callService.getAllNodes().subscribe((res)=>{
                 this.nodes=res;
             })
