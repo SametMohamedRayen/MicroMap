@@ -34,7 +34,10 @@ export class AddCallComponent implements OnInit{
         }
         formData.append("description",form.value.description);
         this.callService.addCall(formData).subscribe(()=>{
-            this.showAlert=true;
+            this.showAlert = true;
+            setTimeout(() => {
+                this.showAlert = false;
+            }, 1000);
             form.reset();
             this.type='sync'
             

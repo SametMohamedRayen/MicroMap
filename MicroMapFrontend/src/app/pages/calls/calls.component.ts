@@ -23,6 +23,7 @@ export class CallsComponent implements OnInit{
    eventProduced:string;
    description:string;
 
+   showAlert=false;
    constructor(private callsService:CallsService){}
     ngOnInit(){
         this.callsService.getAllCalls().subscribe((response:Call[])=>{
@@ -79,7 +80,10 @@ export class CallsComponent implements OnInit{
            
            
             document.getElementById('updateModel').style.display='none';
-            alert("Call Updated Successfully");
+            this.showAlert = true;
+            setTimeout(() => {
+                this.showAlert = false;
+            }, 1000);
             this.callsService.getAllCalls().subscribe((response:Call[])=>{
                 this.calls=response;
             });

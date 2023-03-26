@@ -17,7 +17,7 @@
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" name="name" [(ngModel)]="name" class="form-control"
-                                    placeholder="MicroService Name">
+                                    placeholder="Node Name">
                             </div>
                         </div>
                     </div>
@@ -25,8 +25,10 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="type">Type</label>
-                                <input type="text" name="type" class="form-control" [(ngModel)]="type"
-                                    placeholder="MicroService Type">
+                                <select id="type" type="text" name="type" class="form-control" [(ngModel)]="type" placeholder="Node Type">
+                                    <option value="Kong Backend">Kong Backend</option>
+                                    <option value="Microservice">Microservice</option>
+                                </select>
                             </div>
                         </div>
                     </div>
