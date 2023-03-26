@@ -5,10 +5,12 @@ import { CallsService } from 'app/calls.service';
 @Component({
     selector: 'table-cmp',
     moduleId: module.id,
-    templateUrl: 'nodes.component.html'
+    templateUrl: 'nodes.component.html',
+    styleUrls: ['./nodes.component.css']
 })
 
 export class NodesComponent implements OnInit{
+    deleteName:string;
    nodes: Node[]=[];
    showAlert=false;
    constructor(private callService:CallsService){
@@ -20,8 +22,9 @@ export class NodesComponent implements OnInit{
         })
     }
 
-    deleteNode(name: string){
-        this.callService.deleteNode(name).subscribe(()=>{
+    deleteNode(){
+        document.getElementById('deleteModal').style.display='none';
+        this.callService.deleteNode(this.deleteName).subscribe(()=>{
             this.showAlert = true;
             setTimeout(() => {
                 this.showAlert = false;
@@ -30,5 +33,9 @@ export class NodesComponent implements OnInit{
                 this.nodes=res;
             })
         })
+    }
+    public deleteModel(name:string):void{
+        document.getElementById('deleteModal').style.display='block';
+        this.deleteName=name;
     }
 }

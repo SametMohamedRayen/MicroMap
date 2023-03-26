@@ -6,10 +6,11 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 
 import java.util.List;
+import java.util.Set;
 
 public interface NodeRepository extends Neo4jRepository <MyNode,String>{
     @Query("MATCH (n) RETURN n.name as name")
-    public List<String>getAllNames();
+    public Set<String> getAllNames();
     @Query ("MATCH (i:NODE)-[r]->(t:NODE)\n" +
             "RETURN r.id AS id , " +
             "i.name AS issuer , " +

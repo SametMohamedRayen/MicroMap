@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 
@@ -35,7 +36,7 @@ public class NodeService {
     public MyNode getByName(String name){
         return this.nodeRepository.findById(name).orElse(null);
     }
-    public List<String> getName(){
+    public Set<String> getName(){
     return nodeRepository.getAllNames();
     }
     /**

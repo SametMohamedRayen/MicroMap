@@ -6,8 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 
 
-import { UserComponent }            from '../../pages/user/user.component';
-import { TableComponent }           from '../../pages/table/table.component';
+
 
 
 
@@ -29,8 +28,7 @@ import{MatAutocompleteModule}from "@angular/material/autocomplete"
   ],
   declarations: [
     CallsComponent,
-    UserComponent,
-    TableComponent,
+ 
     AddCallComponent,
     NodesComponent,
     AddNodeComponent

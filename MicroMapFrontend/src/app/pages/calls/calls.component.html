@@ -65,7 +65,7 @@
                   {{call.description}}
                 </td>
                 <td>
-                  <button type="button" class="btn btn-danger btn-round" (click)="deleteModel(call.id)">
+                  <button type="button" class="btn btn-danger btn-round" style="background-color: #ef8157; width: auto;" (click)="deleteModel(call.id)">
                     Delete
                 </button>
                 </td>
@@ -173,9 +173,9 @@
             <div class="update ml-auto mr-auto">
 
               <button type="submit" class="btn btn-primary btn-round" [disabled]="updateForm.invalid"
-                style="padding-left: 0px;">Update Call</button>
+                style="width: 200px; margin-right: 10px;">Update</button>
               <button type="button" class="btn btn-danger btn-round"
-                onclick="document.getElementById('updateModel').style.display='none';">Cancel</button>
+                onclick="document.getElementById('updateModel').style.display='none';" style="background-color: #ef8157; width: 200px;">Cancel</button>
             </div>
           </div>
         </form>
