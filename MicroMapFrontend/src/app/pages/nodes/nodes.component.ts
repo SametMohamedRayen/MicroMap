@@ -23,6 +23,9 @@ export class NodesComponent implements OnInit{
     deleteNode(name: string){
         this.callService.deleteNode(name).subscribe(()=>{
             this.showAlert=true;
+            this.callService.getAllNodes().subscribe((res)=>{
+                this.nodes=res;
+            })
         })
     }
 }
