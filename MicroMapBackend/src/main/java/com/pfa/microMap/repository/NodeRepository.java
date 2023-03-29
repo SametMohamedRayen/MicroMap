@@ -11,7 +11,7 @@ import java.util.Set;
 public interface NodeRepository extends Neo4jRepository <MyNode,String>{
     @Query("MATCH (n) RETURN n.name as name")
     public Set<String> getAllNames();
-    @Query ("MATCH (i:NODE)-[r]->(t:NODE)\n" +
+    @Query ("MATCH (i:MyNode)-[r]->(t:MyNode)\n" +
             "RETURN r.id AS id , " +
             "i.name AS issuer , " +
             "t.name AS target, " +
@@ -23,12 +23,12 @@ public interface NodeRepository extends Neo4jRepository <MyNode,String>{
             "r.description AS description")
     public List<Call> findAllCalls();
 
-    @Query(" MATCH (a:NODE), (b:NODE)\n" +
+    @Query(" MATCH (a:MyNode), (b:MyNode)\n" +
             "WHERE a.name = $startNode AND b.name = $endNode\n" +
             "CREATE (a)-[r:CALLS ]->(b)\n" +
             "SET r.id = ID(r) , r.type = $type, r.topic = $topic , r.eventProduced = $eventProduced , r.api = $api , r.description = $description\n" +
             "RETURN r")
-    public void addCall(String startNode
+    public Call addCall(String startNode
             , String endNode ,
                    String type ,
                    String topic,

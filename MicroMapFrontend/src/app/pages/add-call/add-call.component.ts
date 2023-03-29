@@ -17,6 +17,7 @@ export class AddCallComponent implements OnInit{
     options:string[];
     type:string="sync";
     showAlert=false;
+    errorAddCall=false;
     addCall(form:NgForm):void{
         const formData = new FormData();
         formData.append("startNode",form.value.startNode);
@@ -33,13 +34,22 @@ export class AddCallComponent implements OnInit{
 
         }
         formData.append("description",form.value.description);
-        this.callService.addCall(formData).subscribe(()=>{
+        this.callService.addCall(formData).subscribe((res:Call)=>{
+            if(res!=null){
             this.showAlert = true;
             setTimeout(() => {
                 this.showAlert = false;
             }, 1000);
             form.reset();
-            this.type='sync'
+            this.type='sync'}
+            else{
+                form.reset();
+                this.type='sync'
+                this.errorAddCall=true;
+                setTimeout(() => {
+                    this.errorAddCall = false;
+                }, 2000);
+            }
             
         }
             

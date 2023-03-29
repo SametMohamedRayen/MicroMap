@@ -75,14 +75,14 @@ public class NodeService {
      * @param api
      * @param description
      */
-    public void addCall(String startNode
+    public Call addCall(String startNode
             , String endNode ,
                         String type ,
                         String topic,
                         String eventProduced ,
                         String api ,
                         String description ){
-        this.nodeRepository.addCall(startNode,endNode,type, topic,eventProduced,api,description);
+         return this.nodeRepository.addCall(startNode,endNode,type, topic,eventProduced,api,description);
     }
 
     /**

@@ -43,7 +43,7 @@ public class NodeController {
         return this.nodeService.findAllCalls();
     }
     @PostMapping("/call")
-    public void addCall(
+    public Call addCall(
                         @RequestPart("startNode") String startNode,
                         @RequestPart("endNode") String endNode ,
                         @RequestPart("type")  String type ,
@@ -51,7 +51,7 @@ public class NodeController {
                         @RequestPart(value = "eventProduced",required = false)  String eventProduced ,
                         @RequestPart(value = "api",required = false)  String api ,
                         @RequestPart(value = "description",required = false)  String description ){
-        this.nodeService.addCall(startNode,endNode,type, topic,eventProduced,api,description);
+       return this.nodeService.addCall(startNode,endNode,type, topic,eventProduced,api,description);
     }
     @PutMapping("/call/{id}")
     public void updateCall(@PathVariable("id")Long id ,

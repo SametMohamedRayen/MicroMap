@@ -24,8 +24,8 @@ export class CallsService {
   updateCall(id: number, formData:FormData) :Observable<void>{
     return this.http.put<void>(`${this.apiServerUrl}/call/${id}`,formData);
   }
-  addCall(formData: FormData) :Observable<void> {
-    return this.http.post<void>(`${this.apiServerUrl}/call`,formData);
+  addCall(formData: FormData) :Observable<Call> {
+    return this.http.post<Call>(`${this.apiServerUrl}/call`,formData);
   }
   deleteCall(id: string) :Observable<void> {
       return this.http.delete<void>(`${this.apiServerUrl}/call/${id}`);
