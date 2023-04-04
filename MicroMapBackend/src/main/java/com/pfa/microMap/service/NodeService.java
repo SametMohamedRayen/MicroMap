@@ -18,55 +18,64 @@ public class NodeService {
 
     /**
      * Add a microservice to database
-     * @param name
+     *
      * @param
+     * @param name
      */
-    public void add(String name,  String type){
-        if(!nodeRepository.existsById(name)) {
-            MyNode newNode =new MyNode(name,type);
-            this.nodeRepository.save(newNode);
+    public MyNode add(String name, String type) {
+        if (!nodeRepository.existsById(name)) {
+            MyNode newNode = new MyNode(name, type);
+            return this.nodeRepository.save(newNode);
         }
+        return null;
     }
 
     /**
      * Get one microservice by name
+     *
      * @param name
      * @return
      */
-    public MyNode getByName(String name){
+    public MyNode getByName(String name) {
         return this.nodeRepository.findById(name).orElse(null);
     }
-    public Set<String> getName(){
-    return nodeRepository.getAllNames();
+
+    public Set<String> getName() {
+        return nodeRepository.getAllNames();
     }
+
     /**
      * Get all microservices in database
+     *
      * @return
      */
-    public List<MyNode>getAll(){
+    public List<MyNode> getAll() {
         return this.nodeRepository.findAll();
     }
 
     /**
      * delete a microservice
+     *
      * @param name
      */
     public void delete(String name) {
-        if (nodeRepository.existsById(name)) {
-            nodeRepository.deleteById(name);
-        }
+
+        this.nodeRepository.deleteById(name);
+
     }
 
     /**
      * return a list of all avaiable calls
+     *
      * @return
      */
-    public List<Call> findAllCalls(){
+    public List<Call> findAllCalls() {
         return this.nodeRepository.findAllCalls();
     }
 
     /**
      * add a call relationship
+     *
      * @param startNode
      * @param endNode
      * @param type
@@ -76,17 +85,18 @@ public class NodeService {
      * @param description
      */
     public Call addCall(String startNode
-            , String endNode ,
-                        String type ,
+            , String endNode,
+                        String type,
                         String topic,
-                        String eventProduced ,
-                        String api ,
-                        String description ){
-         return this.nodeRepository.addCall(startNode,endNode,type, topic,eventProduced,api,description);
+                        String eventProduced,
+                        String api,
+                        String description) {
+        return this.nodeRepository.addCall(startNode, endNode, type, topic, eventProduced, api, description);
     }
 
     /**
      * update an existing call
+     *
      * @param id
      * @param type
      * @param topic
@@ -94,20 +104,21 @@ public class NodeService {
      * @param api
      * @param description
      */
-    public void updateCall(Long id,
-                           String type ,
+    public Call updateCall(Long id,
+                           String type,
                            String topic,
-                           String eventProduced ,
-                           String api ,
-                           String description){
-        this.nodeRepository.updateCall(id,type,topic,eventProduced,api,description);
+                           String eventProduced,
+                           String api,
+                           String description) {
+        return this.nodeRepository.updateCall(id, type, topic, eventProduced, api, description);
     }
 
     /**
      * Delete A call
+     *
      * @param id
      */
-    public void deleteCall(Long id){
+    public void deleteCall(Long id) {
         this.nodeRepository.deleteCall(id);
     }
 

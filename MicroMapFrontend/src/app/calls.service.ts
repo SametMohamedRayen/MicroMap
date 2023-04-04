@@ -15,8 +15,8 @@ export class CallsService {
   getAllNodesNames():Observable<string[]> {
     return this.http.get<string[]>(`${this.apiServerUrl}/names`);
   }
-  addNode(formData: FormData): Observable<void> {
-    return this.http.post<void>(`${this.apiServerUrl}`,formData);
+  addNode(formData: FormData): Observable<Node> {
+    return this.http.post<Node>(`${this.apiServerUrl}`,formData);
   }
   deleteNode(name: string) :Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/${name}`);

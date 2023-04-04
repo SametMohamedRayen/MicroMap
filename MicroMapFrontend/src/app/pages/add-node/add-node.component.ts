@@ -9,25 +9,37 @@ import { CallsService } from 'app/calls.service';
 })
 
 export class AddNodeComponent implements OnInit {
-    constructor(private callService: CallsService) {
-
-    }
     name: string;
     type: string;
     showAlert = false;
-    addNode(form: NgForm): void {
-        const formData = new FormData();
-        formData.append("name", this.name);
-        formData.append("type", this.type);
-        this.callService.addNode(formData).subscribe(() => {
-            this.showAlert = true;
-            setTimeout(() => {
-                this.showAlert = false;
-            }, 1000);
-            form.reset();
-        })
+    errorAddNode = false;
+    constructor(private callService: CallsService) {
 
     }
     ngOnInit() {
     }
+    
+    addNode(form: NgForm): void {
+        const formData = new FormData();
+        formData.append("name", this.name);
+        formData.append("type", this.type);
+        this.callService.addNode(formData).subscribe((res) => {
+            if (res != null) {
+                this.showAlert = true;
+                setTimeout(() => {
+                    this.showAlert = false;
+                }, 1000);
+                form.reset();
+            }
+            else {
+                this.errorAddNode = true;
+                setTimeout(() => {
+                    this.errorAddNode = false;
+                }, 2000);
+                form.reset();
+            }
+        })
+
+    }
+   
 }

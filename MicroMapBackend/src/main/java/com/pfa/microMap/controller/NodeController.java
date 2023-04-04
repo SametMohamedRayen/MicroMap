@@ -16,54 +16,62 @@ public class NodeController {
     NodeService nodeService;
 
     @GetMapping
-    public List<MyNode> getAll(){
+    public List<MyNode> getAll() {
         return this.nodeService.getAll();
     }
+
     @GetMapping("/names")
-    public Set<String> getAllNames(){
+    public Set<String> getAllNames() {
         return this.nodeService.getName();
     }
+
     @GetMapping("{name}")
-    public MyNode getByName(@PathVariable String name){
+    public MyNode getByName(@PathVariable String name) {
         return this.nodeService.getByName(name);
     }
-    @PostMapping
-    public void add(@RequestPart("name") String name  ,
-                    @RequestPart(value = "type") String type
 
-                    ){
-        nodeService.add(name,type);
+    @PostMapping
+    public MyNode add(@RequestPart("name") String name,
+                      @RequestPart(value = "type") String type
+
+    ) {
+        return this.nodeService.add(name, type);
     }
+
     @DeleteMapping("{name}")
-    public void delete(@PathVariable String name){
+    public void delete(@PathVariable String name) {
         this.nodeService.delete(name);
     }
+
     @GetMapping("/call")
-    public List<Call> findAllCalls(){
+    public List<Call> findAllCalls() {
         return this.nodeService.findAllCalls();
     }
+
     @PostMapping("/call")
     public Call addCall(
-                        @RequestPart("startNode") String startNode,
-                        @RequestPart("endNode") String endNode ,
-                        @RequestPart("type")  String type ,
-                        @RequestPart(value = "topic",required = false) String topic,
-                        @RequestPart(value = "eventProduced",required = false)  String eventProduced ,
-                        @RequestPart(value = "api",required = false)  String api ,
-                        @RequestPart(value = "description",required = false)  String description ){
-       return this.nodeService.addCall(startNode,endNode,type, topic,eventProduced,api,description);
+            @RequestPart("startNode") String startNode,
+            @RequestPart("endNode") String endNode,
+            @RequestPart("type") String type,
+            @RequestPart(value = "topic", required = false) String topic,
+            @RequestPart(value = "eventProduced", required = false) String eventProduced,
+            @RequestPart(value = "api", required = false) String api,
+            @RequestPart(value = "description", required = false) String description) {
+        return this.nodeService.addCall(startNode, endNode, type, topic, eventProduced, api, description);
     }
+
     @PutMapping("/call/{id}")
-    public void updateCall(@PathVariable("id")Long id ,
-                           @RequestPart(value = "type",required = false)  String type ,
-                           @RequestPart(value = "topic",required = false) String topic,
-                           @RequestPart(value = "eventProduced",required = false)  String eventProduced ,
-                           @RequestPart(value = "api",required = false)  String api ,
-                           @RequestPart(value = "description",required = false)  String description ){
-        this.nodeService.updateCall(id,type,topic,eventProduced,api,description);
+    public Call updateCall(@PathVariable("id") Long id,
+                           @RequestPart(value = "type", required = false) String type,
+                           @RequestPart(value = "topic", required = false) String topic,
+                           @RequestPart(value = "eventProduced", required = false) String eventProduced,
+                           @RequestPart(value = "api", required = false) String api,
+                           @RequestPart(value = "description", required = false) String description) {
+        return this.nodeService.updateCall(id, type, topic, eventProduced, api, description);
     }
+
     @DeleteMapping("call/{id}")
-    public void deleteCall(@PathVariable Long id){
+    public void deleteCall(@PathVariable Long id) {
         this.nodeService.deleteCall(id);
     }
 }

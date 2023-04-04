@@ -1,10 +1,15 @@
 <div class="row">
 
     <div class="col-md-8">
-        <div *ngIf="showAlert" class="alert alert-primary alert-dismissible fade show">
+        <div *ngIf="((showAlert)&&!(errorAddNode))" class="alert alert-primary alert-dismissible fade show">
             <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
             </button>
             <span>Node Added Successfully</span>
+        </div>
+        <div *ngIf="errorAddNode" class="alert alert-danger alert-dismissible fade show">
+            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+            <span>An Error Occured while adding the Node ... Check if the Node Exists Or Check Connection</span>
         </div>
         <div class="card card-user">
             <div class="card-header">
@@ -26,8 +31,12 @@
                             <div class="form-group">
                                 <label for="type">Type</label>
                                 <select id="type" type="text" name="type" class="form-control" [(ngModel)]="type" placeholder="Node Type">
-                                    <option value="Kong Backend">Kong Backend</option>
+                                    <option value="API Gateway">API Gateway</option>
                                     <option value="Microservice">Microservice</option>
+                                    <option value="Domain">Domain</option>
+                                    <option value="Mobility Provider">Mobility Provider</option>
+                                    <option value="Device">Device</option>
+                                    <option value="AWS Service">AWS Service</option>
                                 </select>
                             </div>
                         </div>

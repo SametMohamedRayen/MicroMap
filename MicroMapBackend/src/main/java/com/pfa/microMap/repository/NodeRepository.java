@@ -8,10 +8,11 @@ import org.springframework.data.neo4j.repository.query.Query;
 import java.util.List;
 import java.util.Set;
 
-public interface NodeRepository extends Neo4jRepository <MyNode,String>{
+public interface NodeRepository extends Neo4jRepository<MyNode, String> {
     @Query("MATCH (n) RETURN n.name as name")
     public Set<String> getAllNames();
-    @Query ("MATCH (i:MyNode)-[r]->(t:MyNode)\n" +
+
+    @Query("MATCH (i:MyNode)-[r]->(t:MyNode)\n" +
             "RETURN r.id AS id , " +
             "i.name AS issuer , " +
             "t.name AS target, " +
@@ -29,24 +30,23 @@ public interface NodeRepository extends Neo4jRepository <MyNode,String>{
             "SET r.id = ID(r) , r.type = $type, r.topic = $topic , r.eventProduced = $eventProduced , r.api = $api , r.description = $description\n" +
             "RETURN r")
     public Call addCall(String startNode
-            , String endNode ,
-                   String type ,
-                   String topic,
-                   String eventProduced ,
-                   String api ,
-                   String description );
+            , String endNode,
+                        String type,
+                        String topic,
+                        String eventProduced,
+                        String api,
+                        String description);
+
     @Query("MATCH ()-[r]->()\n" +
             "WHERE r.id = $id\n" +
-            "SET  r.type = $type, r.topic = $topic , r.eventProduced = $eventProduced , r.api = $api , r.description = $description"
+            "SET  r.type = $type, r.topic = $topic , r.eventProduced = $eventProduced , r.api = $api , r.description = $description\n" +
+            "RETURN r"
     )
-    public void updateCall(Long id,String type ,String topic ,String eventProduced ,String api ,
+    public Call updateCall(Long id, String type, String topic, String eventProduced, String api,
                            String description);
+
     @Query("MATCH ()-[r]->()\n" +
             "WHERE r.id = $id\n" +
             "DELETE r")
     public void deleteCall(Long id);
-
-
-
-
 }
