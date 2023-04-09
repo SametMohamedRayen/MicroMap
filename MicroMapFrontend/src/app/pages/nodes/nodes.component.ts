@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Node } from '@angular/compiler';
+import { Node } from 'app/node';
 import { CallsService } from 'app/calls.service';
+import { NodeService } from 'app/node.service';
 
 @Component({
     selector: 'table-cmp',
@@ -13,11 +14,11 @@ export class NodesComponent implements OnInit {
     deleteName: string;
     nodes: Node[] = [];
     showAlert = false;
-    constructor(private callService: CallsService) {
+    constructor(private nodeService: NodeService) {
 
     }
     ngOnInit() {
-        this.callService.getAllNodes().subscribe((res) => {
+        this.nodeService.getAllNodes().subscribe((res) => {
             this.nodes = res;
         })
     }
@@ -27,12 +28,12 @@ export class NodesComponent implements OnInit {
     }
     deleteNode() {
         document.getElementById('deleteModal').style.display = 'none';
-        this.callService.deleteNode(this.deleteName).subscribe(() => {
+        this.nodeService.deleteNode(this.deleteName).subscribe(() => {
             this.showAlert = true;
             setTimeout(() => {
                 this.showAlert = false;
             }, 1000);
-            this.callService.getAllNodes().subscribe((res) => {
+            this.nodeService.getAllNodes().subscribe((res) => {
                 this.nodes = res;
             })
         })

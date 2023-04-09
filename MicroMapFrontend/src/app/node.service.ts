@@ -1,0 +1,27 @@
+import { HttpClient } from '@angular/common/http';
+
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'environments/environment';
+import { Node } from './node';
+@Injectable({
+  providedIn: 'root'
+})
+export class NodeService {
+
+  private apiServerUrl=environment.apiBaseUrl;
+  constructor(private http: HttpClient) { }
+  getAllNodes():Observable<Node[]> {
+    return this.http.get<Node[]>(`${this.apiServerUrl}/node`);
+  }
+  getAllNodesNames():Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiServerUrl}/node/names`);
+  }
+  addNode(formData: FormData): Observable<Node> {
+    return this.http.post<Node>(`${this.apiServerUrl}/node`,formData);
+  }
+  deleteNode(name: string) :Observable<void> {
+    return this.http.delete<void>(`${this.apiServerUrl}/node/${name}`);
+  }
+
+}

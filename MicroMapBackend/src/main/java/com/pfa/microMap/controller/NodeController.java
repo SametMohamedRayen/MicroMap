@@ -11,7 +11,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/node")
-// test
+
 public class NodeController {
     @Autowired
     NodeService nodeService;
@@ -44,35 +44,5 @@ public class NodeController {
         this.nodeService.delete(name);
     }
 
-    @GetMapping("/call")
-    public List<Call> findAllCalls() {
-        return this.nodeService.findAllCalls();
-    }
 
-    @PostMapping("/call")
-    public Call addCall(
-            @RequestPart("startNode") String startNode,
-            @RequestPart("endNode") String endNode,
-            @RequestPart("type") String type,
-            @RequestPart(value = "topic", required = false) String topic,
-            @RequestPart(value = "eventProduced", required = false) String eventProduced,
-            @RequestPart(value = "api", required = false) String api,
-            @RequestPart(value = "description", required = false) String description) {
-        return this.nodeService.addCall(startNode, endNode, type, topic, eventProduced, api, description);
-    }
-
-    @PutMapping("/call/{id}")
-    public Call updateCall(@PathVariable("id") Long id,
-                           @RequestPart(value = "type", required = false) String type,
-                           @RequestPart(value = "topic", required = false) String topic,
-                           @RequestPart(value = "eventProduced", required = false) String eventProduced,
-                           @RequestPart(value = "api", required = false) String api,
-                           @RequestPart(value = "description", required = false) String description) {
-        return this.nodeService.updateCall(id, type, topic, eventProduced, api, description);
-    }
-
-    @DeleteMapping("call/{id}")
-    public void deleteCall(@PathVariable Long id) {
-        this.nodeService.deleteCall(id);
-    }
 }

@@ -1,4 +1,4 @@
-import { Call } from '@angular/compiler';
+import { Call } from 'app/call';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CallsService } from 'app/calls.service';

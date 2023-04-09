@@ -8,7 +8,7 @@ import org.springframework.data.neo4j.repository.query.Query;
 import java.util.List;
 import java.util.Set;
 
-public interface NodeRepository extends Neo4jRepository<MyNode, String> {
+public interface SharedRepository extends Neo4jRepository<MyNode, String> {
     @Query("MATCH (n) RETURN n.name as name")
     public Set<String> getAllNames();
 

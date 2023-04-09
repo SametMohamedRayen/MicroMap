@@ -1,26 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { Node } from '@angular/compiler';
-import { Call } from '@angular/compiler';
+
+
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
+import { Call } from './call';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CallsService {
-  getAllNodes():Observable<Node[]> {
-    return this.http.get<Node[]>(`${this.apiServerUrl}`);
-  }
-  getAllNodesNames():Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiServerUrl}/names`);
-  }
-  addNode(formData: FormData): Observable<Node> {
-    return this.http.post<Node>(`${this.apiServerUrl}`,formData);
-  }
-  deleteNode(name: string) :Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/${name}`);
-  }
+  private apiServerUrl=environment.apiBaseUrl;
+  constructor(private http: HttpClient) { }
+  
   updateCall(id: number, formData:FormData) :Observable<void>{
     return this.http.put<void>(`${this.apiServerUrl}/call/${id}`,formData);
   }
@@ -30,9 +22,9 @@ export class CallsService {
   deleteCall(id: string) :Observable<void> {
       return this.http.delete<void>(`${this.apiServerUrl}/call/${id}`);
   }
-  private apiServerUrl=environment.apiBaseUrl;
+
   public getAllCalls():Observable<Call[]> {
     return this.http.get<Call[]>(`${this.apiServerUrl}/call`);
 }
-  constructor(private http: HttpClient) { }
+
 }

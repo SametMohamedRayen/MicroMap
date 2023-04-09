@@ -1,8 +1,9 @@
-import { Node } from '@angular/compiler';
-import { Call } from '@angular/compiler';
+
+import { Call } from 'app/call';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CallsService } from 'app/calls.service';
+import { NodeService } from 'app/node.service';
 
 @Component({
     selector: 'user-cmp',
@@ -15,11 +16,11 @@ export class AddCallComponent implements OnInit {
     type: string = "sync";
     showAlert = false;
     errorAddCall = false;
-    constructor(private callService: CallsService) {
+    constructor(private callService: CallsService,private nodeService:NodeService) {
 
     }
     ngOnInit() {
-        this.callService.getAllNodesNames().subscribe((res) => {
+        this.nodeService.getAllNodesNames().subscribe((res) => {
             this.options = res;
         });
     }
