@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  
+  micromap-front:
+    image: micromap-frontend:latest
+    container_name: micromap-frontend-container
+    environment:
+      - ENDPOINT=http://localhost:8080
+    build: ./
+    volumes:
+      - './:/usr/src/app'
+    ports:
+      - "4200:80"
+  
+  micromap-backend:
+    image: micromap-backend
+    container_name: micromap-backend-container
+    environment:
+      - NEO4J_URI=neo4j+s://ab07c988.databases.neo4j.io
+      - NEO4J_USER=neo4j
+      - NEO4J_PASS=HaKUY0hVELvz7Uy4X5VuoaJbcSLHAtqa2sAoqlo6V3s
+    ports:
+      - 8080:8080
+    build: ./
+      
+      

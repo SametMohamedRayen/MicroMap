@@ -9,7 +9,7 @@ import { Node } from './node';
 })
 export class NodeService {
 
-  private apiServerUrl=environment.apiBaseUrl;
+  private apiServerUrl=environment.apiBaseUrl+"/api/v1";
   constructor(private http: HttpClient) { }
   getAllNodes():Observable<Node[]> {
     return this.http.get<Node[]>(`${this.apiServerUrl}/node`);

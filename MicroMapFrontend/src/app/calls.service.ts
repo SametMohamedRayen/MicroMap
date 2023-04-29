@@ -10,7 +10,7 @@ import { Call } from './call';
   providedIn: 'root'
 })
 export class CallsService {
-  private apiServerUrl=environment.apiBaseUrl;
+  private apiServerUrl=environment.apiBaseUrl+"/api/v1";
   constructor(private http: HttpClient) { }
   
   updateCall(id: number, formData:FormData) :Observable<void>{
