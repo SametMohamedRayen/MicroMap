@@ -7,3 +7,6 @@ integration keycloak
 roles : view edit comments 
 comment on the architechture !!! to be more developped
 backup import export
+affichage d'erreurs
+bacup springboot
+refresh + env variables

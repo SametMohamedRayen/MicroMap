@@ -2,6 +2,7 @@ import { Call } from 'app/call';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CallsService } from 'app/calls.service';
+import { error } from 'console';
 
 
 
@@ -24,13 +25,23 @@ export class CallsComponent implements OnInit {
     showAlert = false;
     errorUpdateCall = false;
     showDeleteAlert = false;
-
+    errorLoading =false;
+    errorDelete = false;
     
     constructor(private callsService: CallsService) { }
     ngOnInit() {
         this.callsService.getAllCalls().subscribe((response: Call[]) => {
             this.calls = response;
-        });
+        },
+        (error)=>{
+            this.errorLoading=true;
+            
+
+        }
+        );
+        
+        
+        
     }
   
     public updateModel(id: number, type: string, api: string, topic: string, eventProduced: string, description: string): void {
@@ -70,7 +81,19 @@ export class CallsComponent implements OnInit {
             }
             this.callsService.getAllCalls().subscribe((response: Call[]) => {
                 this.calls = response;
+            }
+            ,
+            (error)=>{
+                this.errorLoading=true;
             });
+            
+            
+        }
+        ,(error)=>{
+            this.errorUpdateCall = true;
+            setTimeout(() => {
+                this.errorUpdateCall = false;
+            }, 2000);
         }
         );
     }
@@ -87,7 +110,13 @@ export class CallsComponent implements OnInit {
             }, 1000);
             this.callsService.getAllCalls().subscribe((response: Call[]) => {
                 this.calls = response;
-            });
+            },
+            (error)=>{
+            this.errorLoading=true;}
+            );
+        }
+        ,(error)=>{
+            this.errorDelete=true;
         });
         document.getElementById('id01').style.display = 'none';
 

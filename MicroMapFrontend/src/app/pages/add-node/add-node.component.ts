@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NodeService } from 'app/node.service';
+import { error } from 'console';
 
 @Component({
     selector: 'user-cmp',
@@ -38,6 +39,12 @@ export class AddNodeComponent implements OnInit {
                 }, 2000);
                 form.reset();
             }
+        },
+        (error)=>{
+            this.errorAddNode = true;
+                setTimeout(() => {
+                    this.errorAddNode = false;
+                }, 2000);
         })
 
     }

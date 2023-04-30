@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Node } from 'app/node';
 import { CallsService } from 'app/calls.service';
 import { NodeService } from 'app/node.service';
+import { error } from 'console';
 
 @Component({
     selector: 'table-cmp',
@@ -14,12 +15,20 @@ export class NodesComponent implements OnInit {
     deleteName: string;
     nodes: Node[] = [];
     showAlert = false;
+    errorLoading=false;
+    errorDelete=false;
+
+
     constructor(private nodeService: NodeService) {
 
     }
     ngOnInit() {
         this.nodeService.getAllNodes().subscribe((res) => {
             this.nodes = res;
+        }
+        ,
+        (error)=>{
+            this.errorLoading=true;
         })
     }
     public deleteModel(name: string): void {
@@ -35,7 +44,15 @@ export class NodesComponent implements OnInit {
             }, 1000);
             this.nodeService.getAllNodes().subscribe((res) => {
                 this.nodes = res;
+            },(error)=>{
+                this.errorLoading=true;
             })
+        },
+        (error)=>{
+            this.errorDelete = true;
+            setTimeout(() => {
+                this.errorDelete = false;
+            }, 1000);
         })
     }
    

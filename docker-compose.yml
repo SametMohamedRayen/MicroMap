@@ -3,10 +3,10 @@ version: '3.9'
 services:
   
   micromap-front:
-    image: micromap-frontend:latest
+    image: micromap-frontend
     container_name: micromap-frontend-container
     environment:
-      - ENDPOINT=http://localhost:8080
+      - BACKEND=http://localhost:8080
     build: ./
     volumes:
       - './:/usr/src/app'

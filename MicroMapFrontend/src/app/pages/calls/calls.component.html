@@ -1,19 +1,23 @@
 <div class="row text-center">
   <div class="col-md-12">
+    <div *ngIf="errorLoading" class="alert alert-danger alert-dismissible fade show"style="text-align: center;">
+     
+      <span>An Error Occured while Loading the calls ... Check Connection</span>
+  </div>
+  <div *ngIf="errorDelete" class="alert alert-danger alert-dismissible fade show"style="text-align: center;">
     
-      <div *ngIf="showDeleteAlert" class="alert alert-danger alert-dismissible fade show">
-          <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-          </button>
+    <span>An Error Occured while Deleting the call ... Check Connection</span>
+</div>
+      <div *ngIf="showDeleteAlert" class="alert alert-danger alert-dismissible fade show"style="text-align: center;">
+          
           <span>Call Deleted Successfully</span>
       </div>
-    <div *ngIf="((showAlert)&&!(errorUpdateCall))" class="alert alert-primary alert-dismissible fade show">
-      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      </button>
+    <div *ngIf="((showAlert)&&!(errorUpdateCall))" class="alert alert-primary alert-dismissible fade show" style="text-align: center;">
+      
       <span>Call Updated Successfully</span>
     </div>
-    <div *ngIf="errorUpdateCall" class="alert alert-danger alert-dismissible fade show">
-      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      </button>
+    <div *ngIf="errorUpdateCall" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
+      
       <span>An Error Occured while Updating the call ... Check Connection</span>
   </div>
     <div class="card">

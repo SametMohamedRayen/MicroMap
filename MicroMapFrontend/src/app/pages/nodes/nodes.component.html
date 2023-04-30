@@ -1,10 +1,17 @@
 <div class="row">
     <div class="col-md-12">
-        <div *ngIf="showAlert" class="alert alert-danger alert-dismissible fade show">
-            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-            </button>
+        <div *ngIf="showAlert" class="alert alert-danger alert-dismissible fade show"style="text-align: center;">
+            
             <span>Node Deleted Successfully</span>
         </div>
+        <div *ngIf="errorLoading" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
+          
+          <span>An error occured While loading nodes ... Check Connection</span>
+      </div>
+      <div *ngIf="errorDelete" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
+        
+        <span>An error occured While Deleting node ... Check connection</span>
+    </div>
       <div class="card text-center">
         <div class="card-header">
           <h4 class="card-title">List of All Nodes</h4>

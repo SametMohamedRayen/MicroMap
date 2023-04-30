@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CallsService } from 'app/calls.service';
 import { NodeService } from 'app/node.service';
+import { error } from 'console';
 
 @Component({
     selector: 'user-cmp',
@@ -56,6 +57,12 @@ export class AddCallComponent implements OnInit {
                     this.errorAddCall = false;
                 }, 2000);
             }
+        }
+        ,(error)=>{
+            this.errorAddCall = true;
+                setTimeout(() => {
+                    this.errorAddCall = false;
+                }, 2000);
         }
         );
     }
