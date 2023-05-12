@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl:window["env"]["apiUrl"] || "default"
+  apiBaseUrl: "http://localhost:8080"
 };

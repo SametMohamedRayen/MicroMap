@@ -1,5 +1,6 @@
 FROM node:latest as builder
 ENV BACKEND=http://localhost:8080
+EXPOSE 80
 RUN mkdir -p /app
 WORKDIR /app
 COPY . .

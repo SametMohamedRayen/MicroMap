@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CallsService } from 'app/calls.service';
 import { error } from 'console';
+import { FileService } from 'app/file.service';
 
 
 
@@ -28,7 +29,7 @@ export class CallsComponent implements OnInit {
     errorLoading =false;
     errorDelete = false;
     
-    constructor(private callsService: CallsService) { }
+    constructor(private callsService: CallsService,private fileService: FileService) { }
     ngOnInit() {
         this.callsService.getAllCalls().subscribe((response: Call[]) => {
             this.calls = response;
@@ -121,5 +122,17 @@ export class CallsComponent implements OnInit {
         document.getElementById('id01').style.display = 'none';
 
     }
+    exportCalls() {
+        this.fileService.exportCalls().subscribe(response => {
+          this.saveFile(response);
+        });
+      }
+    
+      private saveFile(data: Blob) {
+        const blob = new Blob([data], { type: 'application/octet-stream' });
+        const url = window.URL.createObjectURL(blob);
+        const saveas = require('file-saver');
+        saveas.saveAs(blob, 'calls.xlsx');
+      }
     
 }

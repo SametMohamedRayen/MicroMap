@@ -3,6 +3,7 @@ import { Node } from 'app/node';
 import { CallsService } from 'app/calls.service';
 import { NodeService } from 'app/node.service';
 import { error } from 'console';
+import { FileService } from 'app/file.service';
 
 @Component({
     selector: 'table-cmp',
@@ -19,7 +20,7 @@ export class NodesComponent implements OnInit {
     errorDelete=false;
 
 
-    constructor(private nodeService: NodeService) {
+    constructor(private nodeService: NodeService,private fileService : FileService) {
 
     }
     ngOnInit() {
@@ -56,4 +57,16 @@ export class NodesComponent implements OnInit {
         })
     }
    
+    exportNodes() {
+        this.fileService.exportNodes().subscribe(response => {
+          this.saveFile(response);
+        });
+      }
+    
+      private saveFile(data: Blob) {
+        const blob = new Blob([data], { type: 'application/octet-stream' });
+        const url = window.URL.createObjectURL(blob);
+        const saveas = require('file-saver');
+        saveas.saveAs(blob, 'nodes.xlsx');
+      }
 }
