@@ -45,7 +45,7 @@ public class FileService {
       String description = row.getCell(6) != null ? row.getCell(6).getStringCellValue() : null;
 
       // Create a new Relationship object and save it to the database
-      callService.addCall(issuer, target, type, topic, eventProduced, api, description);
+      this.callService.addCall(issuer, target,type, topic, eventProduced, api, description);
     }
     }
   public void insertExcelFileNodes(InputStream inputStream) throws IOException {
@@ -78,9 +78,10 @@ public class FileService {
     headerRow.createCell(0).setCellValue("Issuer");
     headerRow.createCell(1).setCellValue("Target");
     headerRow.createCell(2).setCellValue("Type");
-    headerRow.createCell(3).setCellValue("Event Produced");
-    headerRow.createCell(4).setCellValue("API");
-    headerRow.createCell(5).setCellValue("Description");
+    headerRow.createCell(3).setCellValue("Topic");
+    headerRow.createCell(4).setCellValue("Event Produced");
+    headerRow.createCell(5).setCellValue("API");
+    headerRow.createCell(6).setCellValue("Description");
 
     // Populate the sheet with data from the list of calls
     int rowNum = 1;
@@ -89,9 +90,10 @@ public class FileService {
       row.createCell(0).setCellValue(call.getIssuer());
       row.createCell(1).setCellValue(call.getTarget());
       row.createCell(2).setCellValue(call.getType());
-      row.createCell(3).setCellValue(call.getEventProduced());
-      row.createCell(4).setCellValue(call.getApi());
-      row.createCell(5).setCellValue(call.getDescription());
+      row.createCell(3).setCellValue(call.getTopic());
+      row.createCell(4).setCellValue(call.getEventProduced());
+      row.createCell(5).setCellValue(call.getApi());
+      row.createCell(6).setCellValue(call.getDescription());
     }
 
     // Write the workbook to a ByteArrayOutputStream
@@ -142,7 +144,7 @@ public class FileService {
     headers.setContentDispositionFormData("attachment", "calls.xlsx");
     headers.setContentLength(data.length);
 
-    // Return a ResponseEntity with the Excel file contents
+    // Return the Excel file contents
     return data;
   }
 }

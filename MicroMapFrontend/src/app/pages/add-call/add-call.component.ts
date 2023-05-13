@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { CallsService } from 'app/calls.service';
 import { NodeService } from 'app/node.service';
 import { error } from 'console';
+import { FileService } from 'app/file.service';
 
 @Component({
     selector: 'user-cmp',
@@ -17,7 +18,13 @@ export class AddCallComponent implements OnInit {
     type: string = "sync";
     showAlert = false;
     errorAddCall = false;
-    constructor(private callService: CallsService,private nodeService:NodeService) {
+    selectedFileName = "No file is selected";
+    file: File;
+    isFileSelected = false;
+    errorImportCalls = false;
+    importCallsErrorMessage = "";
+    importedSuccess = false;
+    constructor(private callService: CallsService,private nodeService:NodeService,private fileService:FileService) {
 
     }
     ngOnInit() {
@@ -65,5 +72,42 @@ export class AddCallComponent implements OnInit {
                 }, 2000);
         }
         );
+    }
+    handleFileSelect(e){
+        const auxFile: File = e.target?.files[0];
+        if(!auxFile) return;
+        console.log(auxFile);
+        this.file = e.target.files[0];
+        this.selectedFileName = e.target.files[0].name;
+        this.isFileSelected = true;
+    }
+
+    importNodes(form: NgForm){
+        if(!this.file){
+            this.errorImportCalls = true;
+            this.importCallsErrorMessage = "A file must be selected";
+            setTimeout(() => {
+                this.errorImportCalls = false;
+                this.importCallsErrorMessage = "";
+            }, 2000)
+            return;
+        }
+        const formData = new FormData();
+        formData.append("file", this.file);
+        
+        this.fileService.importCalls(formData).subscribe({
+            next: ((response) =>{
+                this.importedSuccess = true;
+                setTimeout(() => this.importedSuccess = false, 2000)
+            }) ,
+            error: (({error}) => {
+                this.errorImportCalls = true;
+                this.importCallsErrorMessage = error.error;
+                setTimeout(() => {
+                    this.errorImportCalls = false;
+                    this.importCallsErrorMessage = "";
+                }, 2000)
+            })
+        })
     }
 }

@@ -24,12 +24,10 @@ export class NodeService {
     return this.http.delete<void>(`${this.apiServerUrl}/node/${name}`);
   }
 
-  importNodes(formData: FormData): Observable<Node[]>{
-    return this.http.post<Node[]>(`${this.apiServerUrl}/file/insert/node`,formData,{
-      headers: new HttpHeaders({
-        'Content-Type': 'multipart/form-data'
-      })
-    });
+  deleteAll() :Observable<void> {
+    return this.http.delete<void>(`${this.apiServerUrl}/node`);
   }
+
+ 
 
 }

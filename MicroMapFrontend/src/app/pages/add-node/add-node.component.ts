@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { FileService } from 'app/file.service';
 import { NodeService } from 'app/node.service';
 import { error } from 'console';
 
@@ -21,7 +22,7 @@ export class AddNodeComponent implements OnInit {
     errorImportNodes = false;
     importNodesErrorMessage = "";
     importedSuccess = false;
-    constructor(private nodeService: NodeService) {
+    constructor(private nodeService: NodeService,private fileService:FileService) {
 
     }
     ngOnInit() {
@@ -78,7 +79,7 @@ export class AddNodeComponent implements OnInit {
         const formData = new FormData();
         formData.append("file", this.file);
         
-        this.nodeService.importNodes(formData).subscribe({
+        this.fileService.importNodes(formData).subscribe({
             next: ((response) =>{
                 this.importedSuccess = true;
                 setTimeout(() => this.importedSuccess = false, 2000)

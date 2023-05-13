@@ -43,6 +43,10 @@ public class NodeController {
     public void delete(@PathVariable String name) {
         this.nodeService.delete(name);
     }
+  @DeleteMapping()
+  public void deleteAll() {
+    this.nodeService.deleteAll();
+  }
 
 
 }

@@ -36,9 +36,34 @@ export class NodesComponent implements OnInit {
         document.getElementById('deleteModal').style.display = 'block';
         this.deleteName = name;
     }
+    public deleteAllModel(): void {
+        document.getElementById('deleteAllModal').style.display = 'block';
+        
+    }
     deleteNode() {
         document.getElementById('deleteModal').style.display = 'none';
         this.nodeService.deleteNode(this.deleteName).subscribe(() => {
+            this.showAlert = true;
+            setTimeout(() => {
+                this.showAlert = false;
+            }, 1000);
+            this.nodeService.getAllNodes().subscribe((res) => {
+                this.nodes = res;
+            },(error)=>{
+                this.errorLoading=true;
+            })
+        },
+        (error)=>{
+            this.errorDelete = true;
+            setTimeout(() => {
+                this.errorDelete = false;
+            }, 1000);
+        })
+    }
+   
+    deleteAll(){
+        document.getElementById('deleteAllModal').style.display = 'none';
+        this.nodeService.deleteAll().subscribe(() => {
             this.showAlert = true;
             setTimeout(() => {
                 this.showAlert = false;

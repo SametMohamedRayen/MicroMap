@@ -25,5 +25,11 @@ export class FileService {
       headers: new HttpHeaders().append('Content-Type', 'application/json')
     });
   }
+  importNodes(formData: FormData): Observable<void>{
+    return this.http.post<void>(`${this.apiServerUrl}/file/insert/nodes`,formData);
+  }
+  importCalls(formData: FormData): Observable<void>{
+    return this.http.post<void>(`${this.apiServerUrl}/file/insert/calls`,formData);
+  }
  
 }

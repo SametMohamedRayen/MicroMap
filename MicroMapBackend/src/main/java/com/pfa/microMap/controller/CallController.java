@@ -44,4 +44,8 @@ public class CallController {
     public void deleteCall(@PathVariable Long id) {
         this.callService.deleteCall(id);
     }
+  @DeleteMapping()
+  public void deleteAllCalls() {
+    this.callService.deleteAllCalls();
+  }
 }

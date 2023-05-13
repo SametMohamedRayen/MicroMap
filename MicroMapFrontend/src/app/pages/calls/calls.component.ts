@@ -98,12 +98,16 @@ export class CallsComponent implements OnInit {
         }
         );
     }
-    public deleteModel(id: string): void {
+    public deleteModal(id: string): void {
         document.getElementById('id01').style.display = 'block';
         this.deleteId = id;
     }
+    public deleteAllModal(): void {
+        document.getElementById('deleteAllModal').style.display = 'block';
+        
+    }
     public deleteCall(): void {
-
+        document.getElementById('id01').style.display = 'none';
         this.callsService.deleteCall(this.deleteId).subscribe(() => {
             this.showDeleteAlert = true;
             setTimeout(() => {
@@ -119,7 +123,27 @@ export class CallsComponent implements OnInit {
         ,(error)=>{
             this.errorDelete=true;
         });
-        document.getElementById('id01').style.display = 'none';
+        
+
+    }
+    public deleteAll(): void {
+        document.getElementById('deleteAllModal').style.display = 'none';
+        this.callsService.deleteAll().subscribe(() => {
+            this.showDeleteAlert = true;
+            setTimeout(() => {
+                this.showDeleteAlert = false;
+            }, 1000);
+            this.callsService.getAllCalls().subscribe((response: Call[]) => {
+                this.calls = response;
+            },
+            (error)=>{
+            this.errorLoading=true;}
+            );
+        }
+        ,(error)=>{
+            this.errorDelete=true;
+        });
+      
 
     }
     exportCalls() {

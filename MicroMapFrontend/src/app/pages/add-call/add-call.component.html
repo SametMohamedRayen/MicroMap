@@ -9,6 +9,13 @@
        
         <span>An Error Occured while adding the call ... Check if the Node Exists Or Check Connection</span>
     </div>
+    <div *ngIf="((importedSuccess)&&!(errorImportCalls))" class="alert alert-primary alert-dismissible fade show"style="text-align: center;">
+      <span>Calls imported Successfully</span>
+  </div>
+
+    <div *ngIf="errorImportCalls" class="alert alert-danger alert-dismissible fade show" style="text-align: center">
+      <span>{{importCallsErrorMessage}}</span>
+  </div>
       <div class="card card-user">
         <div class="card-header">
           <h5 class="card-title text-center">Add a new Call</h5>
@@ -93,7 +100,33 @@
           </form>
         </div>
       </div>
+      <div class="card card-user">
+        <div class="card-header">
+            <h5 class="card-title text-center">Import Calls</h5>
+        </div>
+        <div class="card-body" style="min-height: auto">
+            <form #importNodesForm (ngSubmit)="importNodes(importNodesForm)">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="custom-file-upload" >
+                            <input type="file" (change)="handleFileSelect($event)" accept=".xls,.xlsx"/>
+                            Upload File
+                        </label>
+                        <label style="margin-left:10px;">{{selectedFileName}}</label>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="update ml-auto mr-auto">
+                        <button [disabled]="!isFileSelected" type="submit" class="btn btn-primary btn-round">
+                            Import
+                        </button>
+                    </div>
+                </div>
+            </form>
 
+        </div>
+    </div>
     </div>
  
   </div>

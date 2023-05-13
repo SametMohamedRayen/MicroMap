@@ -21,8 +21,8 @@ public class FileController {
   @Autowired
   private FileService fileService;
 
-  @PostMapping("/insert/call")
-  public void insertExcelFileCalls(@RequestParam("file") MultipartFile file) throws IOException {
+  @PostMapping("/insert/calls")
+  public void insertExcelFileCalls(@RequestPart("file") MultipartFile file) throws IOException {
 
     fileService.insertExcelFileCalls(file.getInputStream());
 
@@ -30,7 +30,7 @@ public class FileController {
   }
 
   @PostMapping("/insert/nodes")
-  public void insertExcelFileNodes(@RequestParam("file") MultipartFile file) throws IOException {
+  public void insertExcelFileNodes(@RequestPart("file") MultipartFile file) throws IOException {
 
     fileService.insertExcelFileNodes(file.getInputStream());
 

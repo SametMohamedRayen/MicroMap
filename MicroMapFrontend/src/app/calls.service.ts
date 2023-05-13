@@ -22,9 +22,12 @@ export class CallsService {
   deleteCall(id: string) :Observable<void> {
       return this.http.delete<void>(`${this.apiServerUrl}/call/${id}`);
   }
-
+  deleteAll() :Observable<void> {
+    return this.http.delete<void>(`${this.apiServerUrl}/call`);
+}
   public getAllCalls():Observable<Call[]> {
     return this.http.get<Call[]>(`${this.apiServerUrl}/call`);
 }
+
 
 }

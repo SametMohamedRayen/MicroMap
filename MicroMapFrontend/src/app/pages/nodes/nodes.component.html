@@ -1,73 +1,96 @@
 <div class="row">
-    <div class="col-md-12">
-        <div *ngIf="showAlert" class="alert alert-danger alert-dismissible fade show"style="text-align: center;">
-            
-            <span>Node Deleted Successfully</span>
-        </div>
-        <div *ngIf="errorLoading" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
-          
-          <span>An error occured While loading nodes ... Check Connection</span>
-      </div>
-      <div *ngIf="errorDelete" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
-        
-        <span>An error occured While Deleting node ... Check connection</span>
+  <div class="col-md-12">
+    <div *ngIf="showAlert" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
+
+      <span>Node Deleted Successfully</span>
     </div>
-    <button (click)="exportNodes()" >export Nodes</button>
-      <div class="card text-center">
-        <div class="card-header">
-          <h4 class="card-title">List of All Nodes</h4>
-        </div>
-        <div class="card-body">
-          <div class="table">
-            <table class="table">
-              <thead class=" text-primary">
-                <th>
-                  Name
-                </th>
-                <th>
-                  Type
-                </th>
-                <th></th>
-              </thead>
-              <tbody>
-                <tr *ngFor="let node of nodes">
-                  <td>
-                    {{node.name}}
-                  </td>
-                  <td>
-                    {{node.type}}
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-danger btn-round" style="background-color: #ef8157; width: auto;"  (click)="deleteModel(this.node.name)">
-                        Delete
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
- 
-      </div>
+    <div *ngIf="errorLoading" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
+
+      <span>An error occured While loading nodes ... Check Connection</span>
     </div>
-             <!--
+    <div *ngIf="errorDelete" class="alert alert-danger alert-dismissible fade show" style="text-align: center;">
+
+      <span>An error occured While Deleting node ... Check connection</span>
+    </div>
+
+    <div class="card text-center">
+      <div class="card-header">
+        <h4 class="card-title" style="display: inline-block;">List of All Nodes</h4>
+        <span style="margin-left: 50%;">
+          <button style="width: 200px; margin-right: 25px; " (click)="exportNodes()">export Nodes</button>
+          <button style="width: 200px;background-color: #ef8157;" (click)="deleteAllModel()">Delete All Nodes</button>
+        </span>
+      </div>
+      <div class="card-body">
+        <div class="table">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>
+                Name
+              </th>
+              <th>
+                Type
+              </th>
+              <th></th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let node of nodes">
+                <td>
+                  {{node.name}}
+                </td>
+                <td>
+                  {{node.type}}
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-round" style="background-color: #ef8157; width: auto;"
+                    (click)="deleteModel(this.node.name)">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--
     delete model
   -->
-<div id="deleteModal" class="modal">
+  <div id="deleteModal" class="modal">
 
-  <form class="modal-content" action="/action_page.php">
-    <div class="container">
-      <h1>Delete Node</h1>
-      <p>Are you sure you want to delete your This Node</p>
+    <form class="modal-content" >
+      <div class="container">
+        <h1>Delete Node</h1>
+        <p>Are you sure you want to delete your This Node</p>
 
-      <div>
-        <button class="btn btn-primary btn-round" type="button" onclick="document.getElementById('deleteModal').style.display='none'"
-          class="cancelbtn">Cancel</button>
-        <button class="btn btn-danger btn-round" type="button" (click)="deleteNode()" class="deletebtn" >Delete</button>
+        <div>
+          <button class="btn btn-primary btn-round" type="button"
+            onclick="document.getElementById('deleteModal').style.display='none'" class="cancelbtn">Cancel</button>
+          <button class="btn btn-danger btn-round" type="button" (click)="deleteNode()"
+            class="deletebtn">Delete</button>
+        </div>
       </div>
-    </div>
-  </form>
-</div>
+    </form>
   </div>
+  <!--
+    delete All model
+  -->
+  <div id="deleteAllModal" class="modal">
 
-  
+    <form class="modal-content" >
+      <div class="container">
+        <h1>Delete All Nodes</h1>
+        <p>Are you sure you want to delete All the Nodes</p>
+
+        <div>
+          <button class="btn btn-primary btn-round" type="button"
+            onclick="document.getElementById('deleteAllModal').style.display='none'" class="cancelbtn">Cancel</button>
+          <button class="btn btn-danger btn-round" type="button" (click)="deleteAll()"
+            class="deletebtn">Delete</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

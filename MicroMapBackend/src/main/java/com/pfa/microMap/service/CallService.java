@@ -68,4 +68,7 @@ public class CallService {
     public void deleteCall(Long id) {
         this.sharedRepository.deleteCall(id);
     }
+    public void deleteAllCalls(){
+      this.sharedRepository.deleteAllCalls();
+    }
 }

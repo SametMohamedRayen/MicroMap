@@ -63,7 +63,9 @@ public class NodeService {
         this.sharedRepository.deleteById(name);
 
     }
-
+public void deleteAll(){
+      this.sharedRepository.deleteAll();
+}
 
 
 }
