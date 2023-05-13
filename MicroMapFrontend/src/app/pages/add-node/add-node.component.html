@@ -9,6 +9,14 @@
            
             <span>An Error Occured while adding the Node ... Check if the Node Exists Or Check Connection</span>
         </div>
+
+        <div *ngIf="((importedSuccess)&&!(errorImportNodes))" class="alert alert-primary alert-dismissible fade show"style="text-align: center;">
+            <span>Nodes imported Successfully</span>
+        </div>
+
+        <div *ngIf="errorImportNodes" class="alert alert-danger alert-dismissible fade show" style="text-align: center">
+            <span>{{importNodesErrorMessage}}</span>
+        </div>
         <div class="card card-user">
             <div class="card-header">
                 <h5 class="card-title text-center">Add a new Node</h5>
@@ -43,6 +51,33 @@
                         <div class="update ml-auto mr-auto">
                             <button type="submit" class="btn btn-primary btn-round" [disabled]="addFormNode.invalid">
                                 Add Node
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="card card-user">
+            <div class="card-header">
+                <h5 class="card-title text-center">Import nodes</h5>
+            </div>
+            <div class="card-body" style="min-height: auto">
+                <form #importNodesForm (ngSubmit)="importNodes(importNodesForm)">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="custom-file-upload" >
+                                <input type="file" (change)="handleFileSelect($event)" accept=".xls,.xlsx"/>
+                                Upload File
+                            </label>
+                            <label style="margin-left:10px;">{{selectedFileName}}</label>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="update ml-auto mr-auto">
+                            <button [disabled]="!isFileSelected" type="submit" class="btn btn-primary btn-round">
+                                Import
                             </button>
                         </div>
                     </div>

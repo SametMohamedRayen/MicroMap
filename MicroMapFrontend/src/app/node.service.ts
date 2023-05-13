@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -22,6 +22,14 @@ export class NodeService {
   }
   deleteNode(name: string) :Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/node/${name}`);
+  }
+
+  importNodes(formData: FormData): Observable<Node[]>{
+    return this.http.post<Node[]>(`${this.apiServerUrl}/file/insert/node`,formData,{
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data'
+      })
+    });
   }
 
 }
