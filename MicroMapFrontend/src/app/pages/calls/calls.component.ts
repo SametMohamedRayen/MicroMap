@@ -28,6 +28,7 @@ export class CallsComponent implements OnInit {
     showDeleteAlert = false;
     errorLoading =false;
     errorDelete = false;
+    errorExport=false;
     
     constructor(private callsService: CallsService,private fileService: FileService) { }
     ngOnInit() {
@@ -141,14 +142,23 @@ export class CallsComponent implements OnInit {
             );
         }
         ,(error)=>{
-            this.errorDelete=true;
+            this.errorDelete = true;
+            setTimeout(() => {
+                this.errorDelete = false;
+            }, 1000);
         });
       
 
     }
     exportCalls() {
-        this.fileService.exportCalls().subscribe(response => {
+        this.fileService.exportCalls().subscribe((response) => {
           this.saveFile(response);
+        },
+        (error)=>{
+            this.errorExport = true;
+            setTimeout(() => {
+                this.errorExport = false;
+            }, 1000);
         });
       }
     

@@ -18,6 +18,8 @@ export class NodesComponent implements OnInit {
     showAlert = false;
     errorLoading=false;
     errorDelete=false;
+    errorExport=false;
+    
 
 
     constructor(private nodeService: NodeService,private fileService : FileService) {
@@ -85,6 +87,12 @@ export class NodesComponent implements OnInit {
     exportNodes() {
         this.fileService.exportNodes().subscribe(response => {
           this.saveFile(response);
+        },
+        error=>{
+            this.errorExport = true;
+            setTimeout(() => {
+                this.errorExport = false;
+            }, 1000);
         });
       }
     
