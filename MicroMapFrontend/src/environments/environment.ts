@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "http://localhost:8080"
+  apiBaseUrl: window["env"]["apiUrl"] || "http://localhost:8081"
 };

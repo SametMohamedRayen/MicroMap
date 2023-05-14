@@ -22,13 +22,13 @@
                 <h5 class="card-title text-center">Add a new Node</h5>
             </div>
             <div class="card-body">
-                <form #addFormNode (ngSubmit)="addNode(addFormNode)">
+                <form #addFormNode="ngForm" (ngSubmit)="addNode(addFormNode)">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" name="name" [(ngModel)]="name" class="form-control"
-                                    placeholder="Node Name">
+                                    placeholder="Node Name" required>
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="type">Type</label>
-                                <select id="type" type="text" name="type" class="form-control" [(ngModel)]="type" placeholder="Node Type">
+                                <select id="type" type="text" name="type" class="form-control" [(ngModel)]="type" placeholder="Node Type" required>
                                     <option value="API Gateway">API Gateway</option>
                                     <option value="Microservice">Microservice</option>
                                     <option value="Domain">Domain</option>
