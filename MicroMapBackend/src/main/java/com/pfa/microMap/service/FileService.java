@@ -2,23 +2,18 @@ package com.pfa.microMap.service;
 
 import com.pfa.microMap.model.Call;
 import com.pfa.microMap.model.MyNode;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -28,6 +23,13 @@ public class FileService {
 
   @Autowired
   NodeService nodeService;
+
+  /**
+   * Insert Calls from an Excel file
+   *
+   * @param inputStream
+   * @throws IOException
+   */
   public void insertExcelFileCalls(InputStream inputStream) throws IOException {
     Workbook workbook = new XSSFWorkbook(inputStream);
     Sheet sheet = workbook.getSheetAt(0); // Assuming the data is in the first sheet
@@ -45,9 +47,10 @@ public class FileService {
       String description = row.getCell(6) != null ? row.getCell(6).getStringCellValue() : null;
 
       // Create a new Relationship object and save it to the database
-      this.callService.addCall(issuer, target,type, topic, eventProduced, api, description);
+      this.callService.addCall(issuer, target, type, topic, eventProduced, api, description);
     }
-    }
+  }
+
   public void insertExcelFileNodes(InputStream inputStream) throws IOException {
     Workbook workbook = new XSSFWorkbook(inputStream);
     Sheet sheet = workbook.getSheetAt(0); // Assuming the data is in the first sheet
@@ -67,7 +70,7 @@ public class FileService {
 
   public byte[] exportCallsToExcel() throws IOException {
     // Create a new workbook
-    List<Call> calls  =this.callService.findAllCalls();
+    List<Call> calls = this.callService.findAllCalls();
     Workbook workbook = new XSSFWorkbook();
 
     // Create a new sheet
@@ -75,8 +78,8 @@ public class FileService {
 
     // Create header row
     Row headerRow = sheet.createRow(0);
-    headerRow.createCell(0).setCellValue("Issuer");
-    headerRow.createCell(1).setCellValue("Target");
+    headerRow.createCell(0).setCellValue("Initiator/Producer");
+    headerRow.createCell(1).setCellValue("Target/Consumer");
     headerRow.createCell(2).setCellValue("Type");
     headerRow.createCell(3).setCellValue("Topic");
     headerRow.createCell(4).setCellValue("Event Produced");
@@ -110,9 +113,10 @@ public class FileService {
     // Return a ResponseEntity with the Excel file contents
     return data;
   }
+
   public byte[] exportNodesToExcel() throws IOException {
     // Create a new workbook
-    List<MyNode> nodes  =this.nodeService.getAll();
+    List<MyNode> nodes = this.nodeService.getAll();
     Workbook workbook = new XSSFWorkbook();
 
     // Create a new sheet

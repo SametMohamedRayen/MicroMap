@@ -1,10 +1,8 @@
 package com.pfa.microMap.controller;
 
-import com.pfa.microMap.model.Call;
 import com.pfa.microMap.service.FileService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/file")
@@ -52,6 +49,7 @@ public class FileController {
 
     return ResponseEntity.ok().build();
   }
+
   @GetMapping(value = "/download/node", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
   public ResponseEntity<?> exportNodesToExcel(HttpServletResponse response) throws IOException {
     String fileName = "nodes-" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".xlsx";
