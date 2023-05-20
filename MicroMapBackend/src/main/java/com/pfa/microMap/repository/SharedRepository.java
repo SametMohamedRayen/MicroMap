@@ -2,10 +2,14 @@ package com.pfa.microMap.repository;
 
 import com.pfa.microMap.model.Call;
 import com.pfa.microMap.model.MyNode;
+import org.neo4j.driver.Result;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface SharedRepository extends Neo4jRepository<MyNode, String> {
@@ -54,5 +58,23 @@ public interface SharedRepository extends Neo4jRepository<MyNode, String> {
     "DELETE r")
   public void deleteAllCalls();
 
+  @Query("UNWIND $calls AS call " +
+    "MATCH (a:MyNode), (b:MyNode) " +
+    "WHERE a.name = call.startNode AND b.name = call.endNode " +
+    "CREATE (a)-[r:CALLS]->(b) " +
+    "SET r.id = ID(r), r.type = call.type, r.topic = call.topic, r.eventProduced = call.eventProduced, " +
+    "r.api = call.api, r.description = call.description "
+    )
+  void addCalls(@Param("calls") List<Map<String, Object>> calls);
+
+  @Query(
+    "UNWIND $calls AS call " +
+      "OPTIONAL MATCH (a:MyNode {name: call.startNode}) " +
+      "OPTIONAL MATCH (b:MyNode {name: call.endNode}) " +
+      "WITH call, a, b "+
+      "WHERE a IS NULL OR b IS NULL " +
+      "RETURN call.startNode + ' -> ' + call.endNode AS unmatchedNodes"
+  )
+  Set<String> getUnmatchedNodes(@Param("calls") List<Map<String, Object>> calls);
 
 }

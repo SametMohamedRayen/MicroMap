@@ -3,6 +3,8 @@ package com.pfa.microMap.controller;
 import com.pfa.microMap.service.FileService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,50 +21,71 @@ public class FileController {
   private FileService fileService;
 
   @PostMapping("/insert/calls")
-  public void insertExcelFileCalls(@RequestPart("file") MultipartFile file) throws IOException {
+  public ResponseEntity<?> insertExcelFileCalls(@RequestPart("file") MultipartFile file) {
+    try {
 
-    fileService.insertExcelFileCalls(file.getInputStream());
+      this.fileService.insertExcelFileCalls(file.getInputStream());
+      return ResponseEntity.ok().body("{\"message\": \"Calls added successfully\"}");
+    } catch (IOException e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \""+e.getMessage()+"\"}");
+    } catch (DataAccessException e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \""+e.getMessage()+"\"}");
+    }
+
+
 
 
   }
 
   @PostMapping("/insert/nodes")
-  public void insertExcelFileNodes(@RequestPart("file") MultipartFile file) throws IOException {
+  public ResponseEntity<?> insertExcelFileNodes(@RequestPart("file") MultipartFile file) {
+    try {
 
-    fileService.insertExcelFileNodes(file.getInputStream());
-
-
+      this.fileService.insertExcelFileNodes(file.getInputStream());
+      return ResponseEntity.ok().body("{\"message\": \"Nodes added successfully\"}");
+    } catch (IOException e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \""+e.getMessage()+"\"}");
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\": \""+e.getMessage()+"\"}");
+    }
   }
-
   @GetMapping(value = "/download/call", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-  public ResponseEntity<?> exportCallsToExcel(HttpServletResponse response) throws IOException {
-    String fileName = "calls-" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".xlsx";
-    response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
-    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+  public ResponseEntity<?> exportCallsToExcel(HttpServletResponse response) {
+    try {
+      String fileName = "calls-" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".xlsx";
+      response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+      response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
-    // Get the Excel file as a byte array
-    byte[] excelBytes = this.fileService.exportCallsToExcel();
+      // Get the Excel file as a byte array
+      byte[] excelBytes = this.fileService.exportCallsToExcel();
 
-    // Write the byte array to the response output stream
-    response.getOutputStream().write(excelBytes);
-    response.getOutputStream().flush();
+      // Write the byte array to the response output stream
+      response.getOutputStream().write(excelBytes);
+      response.getOutputStream().flush();
 
-    return ResponseEntity.ok().build();
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+    }
   }
 
   @GetMapping(value = "/download/node", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-  public ResponseEntity<?> exportNodesToExcel(HttpServletResponse response) throws IOException {
-    String fileName = "nodes-" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".xlsx";
-    response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
-    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+  public ResponseEntity<?> exportNodesToExcel(HttpServletResponse response) {
+    try {
+      String fileName = "nodes-" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".xlsx";
+      response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+      response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
-    // Get the Excel file as a byte array
-    byte[] excelBytes = this.fileService.exportNodesToExcel();
+      // Get the Excel file as a byte array
+      byte[] excelBytes = this.fileService.exportNodesToExcel();
 
-    // Write the byte array to the response output stream
-    response.getOutputStream().write(excelBytes);
-    response.getOutputStream().flush();
+      // Write the byte array to the response output stream
+      response.getOutputStream().write(excelBytes);
+      response.getOutputStream().flush();
 
-    return ResponseEntity.ok().build();
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+    }
   }
 }

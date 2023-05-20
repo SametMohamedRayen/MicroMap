@@ -28,6 +28,9 @@ public class NodeService {
     }
     return null;
   }
+  public List<MyNode> addAll(List<MyNode> nodes) {
+    return this.sharedRepository.saveAll(nodes);
+  }
 
   /**
    * Get one microservice by name

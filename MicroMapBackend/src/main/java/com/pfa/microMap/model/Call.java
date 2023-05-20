@@ -15,10 +15,22 @@ public class Call {
   //For Sync Calls Only
   private String api;
   private String description;
-
+  public Call() {
+    // Default constructor
+  }
 
   public Call(Long id, String issuer, String target, String type, String topic, String eventProduced, String api, String description) {
     this.id = id;
+    this.issuer = issuer;
+    this.target = target;
+    this.type = type;
+    this.topic = topic;
+    this.eventProduced = eventProduced;
+    this.api = api;
+    this.description = description;
+  }
+
+  public Call(String issuer, String target, String type, String topic, String eventProduced, String api, String description) {
     this.issuer = issuer;
     this.target = target;
     this.type = type;
@@ -90,5 +102,19 @@ public class Call {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  @Override
+  public String toString() {
+    return "Call{" +
+      "id=" + id +
+      ", issuer='" + issuer + '\'' +
+      ", target='" + target + '\'' +
+      ", type='" + type + '\'' +
+      ", topic='" + topic + '\'' +
+      ", eventProduced='" + eventProduced + '\'' +
+      ", api='" + api + '\'' +
+      ", description='" + description + '\'' +
+      '}';
   }
 }

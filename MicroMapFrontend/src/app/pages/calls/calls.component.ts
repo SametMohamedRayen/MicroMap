@@ -32,15 +32,14 @@ export class CallsComponent implements OnInit {
     
     constructor(private callsService: CallsService,private fileService: FileService) { }
     ngOnInit() {
-        this.callsService.getAllCalls().subscribe((response: Call[]) => {
-            this.calls = response;
-        },
-        (error)=>{
-            this.errorLoading=true;
-            
-
-        }
-        );
+        this.callsService.getAllCalls().subscribe({
+            next: (response: Call[]) => {
+              this.calls = response;
+            },
+            error: (error) => {
+              this.errorLoading = true;
+            }
+          });
         
         
         
@@ -59,46 +58,46 @@ export class CallsComponent implements OnInit {
         const formData = new FormData();
         formData.append("type", this.type);
         if (this.type == 'sync') {
-            formData.append("api", this.api);
-        }
-        else if (this.type == 'async') {
-            formData.append("topic", this.topic);
-            formData.append("eventProduced", this.eventProduced);
-
+          formData.append("api", this.api);
+        } else if (this.type == 'async') {
+          formData.append("topic", this.topic);
+          formData.append("eventProduced", this.eventProduced);
         }
         formData.append("description", this.description);
-        this.callsService.updateCall(this.id, formData).subscribe((res) => {
+      
+        this.callsService.updateCall(this.id, formData).subscribe({
+          next: (res) => {
             document.getElementById('updateModel').style.display = 'none';
             if (res != null) {
-                this.showAlert = true;
-                setTimeout(() => {
-                    this.showAlert = false;
-                }, 1000);
+              this.showAlert = true;
+              setTimeout(() => {
+                this.showAlert = false;
+              }, 1000);
+            } else {
+              this.errorUpdateCall = true;
+              setTimeout(() => {
+                this.errorUpdateCall = false;
+              }, 2000);
             }
-            else {
-                this.errorUpdateCall = true;
-                setTimeout(() => {
-                    this.errorUpdateCall = false;
-                }, 2000);
-            }
-            this.callsService.getAllCalls().subscribe((response: Call[]) => {
+      
+            this.callsService.getAllCalls().subscribe({
+              next: (response: Call[]) => {
                 this.calls = response;
-            }
-            ,
-            (error)=>{
-                this.errorLoading=true;
+              },
+              error: (error) => {
+                this.errorLoading = true;
+              }
             });
-            
-            
-        }
-        ,(error)=>{
+          },
+          error: (error) => {
             this.errorUpdateCall = true;
             setTimeout(() => {
-                this.errorUpdateCall = false;
+              this.errorUpdateCall = false;
             }, 2000);
-        }
-        );
-    }
+          }
+        });
+      }
+      
     public deleteModal(id: string): void {
         document.getElementById('id01').style.display = 'block';
         this.deleteId = id;
@@ -109,57 +108,72 @@ export class CallsComponent implements OnInit {
     }
     public deleteCall(): void {
         document.getElementById('id01').style.display = 'none';
-        this.callsService.deleteCall(this.deleteId).subscribe(() => {
+        this.callsService.deleteCall(this.deleteId).subscribe({
+          next: () => {
             this.showDeleteAlert = true;
             setTimeout(() => {
-                this.showDeleteAlert = false;
+              this.showDeleteAlert = false;
             }, 1000);
-            this.callsService.getAllCalls().subscribe((response: Call[]) => {
+      
+            this.callsService.getAllCalls().subscribe({
+              next: (response: Call[]) => {
                 this.calls = response;
-            },
-            (error)=>{
-            this.errorLoading=true;}
-            );
-        }
-        ,(error)=>{
-            this.errorDelete=true;
+              },
+              error: (error) => {
+                this.errorLoading = true;
+              }
+            });
+          },
+          error: () => {
+            this.errorDelete = true;
+          }
         });
-        
-
-    }
-    public deleteAll(): void {
+      }
+      
+      public deleteAll(): void {
         document.getElementById('deleteAllModal').style.display = 'none';
-        this.callsService.deleteAll().subscribe(() => {
+        this.callsService.deleteAll().subscribe({
+          next: () => {
             this.showDeleteAlert = true;
             setTimeout(() => {
-                this.showDeleteAlert = false;
+              this.showDeleteAlert = false;
             }, 1000);
-            this.callsService.getAllCalls().subscribe((response: Call[]) => {
+      
+            this.callsService.getAllCalls().subscribe({
+              next: (response: Call[]) => {
                 this.calls = response;
-            },
-            (error)=>{
-            this.errorLoading=true;}
-            );
-        }
-        ,(error)=>{
+              },
+              error: (error) => {
+                this.errorLoading = true;
+              }
+            });
+          },
+          error: () => {
             this.errorDelete = true;
             setTimeout(() => {
-                this.errorDelete = false;
+              this.errorDelete = false;
             }, 1000);
+          }
         });
-      
-
-    }
+      }
     exportCalls() {
-        this.fileService.exportCalls().subscribe((response) => {
-          this.saveFile(response);
-        },
-        (error)=>{
-            this.errorExport = true;
-            setTimeout(() => {
-                this.errorExport = false;
-            }, 1000);
-        });
+        this.fileService.exportCalls().subscribe(
+            {
+                next: ((response) => {
+                    this.saveFile(response);
+                  }),
+                error: (({})=>{
+                    this.errorExport = true;
+                    setTimeout(() => {
+                        this.errorExport = false;
+                    }, 1000);
+                })
+                
+
+            }
+        )
+        
+        
       }
     
       private saveFile(data: Blob) {

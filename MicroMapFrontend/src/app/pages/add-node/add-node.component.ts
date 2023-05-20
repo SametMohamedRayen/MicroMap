@@ -32,7 +32,7 @@ export class AddNodeComponent implements OnInit {
         const formData = new FormData();
         formData.append("name", this.name);
         formData.append("type", this.type);
-        this.nodeService.addNode(formData).subscribe((res) => {
+        this.nodeService.addNode(formData).subscribe({ next:((res) => {
             if (res != null) {
                 this.showAlert = true;
                 setTimeout(() => {
@@ -47,20 +47,22 @@ export class AddNodeComponent implements OnInit {
                 }, 2000);
                 form.reset();
             }
-        },
-        (error)=>{
+        }),
+        error:((error)=>{
             this.errorAddNode = true;
                 setTimeout(() => {
                     this.errorAddNode = false;
                 }, 2000);
         })
+    })
+    
 
     }
 
     handleFileSelect(e){
         const auxFile: File = e.target?.files[0];
         if(!auxFile) return;
-        console.log(auxFile);
+        
         this.file = e.target.files[0];
         this.selectedFileName = e.target.files[0].name;
         this.isFileSelected = true;
@@ -85,8 +87,12 @@ export class AddNodeComponent implements OnInit {
                 setTimeout(() => this.importedSuccess = false, 2000)
             }) ,
             error: (({error}) => {
+
                 this.errorImportNodes = true;
-                this.importNodesErrorMessage = error.error;
+                this.importNodesErrorMessage = error.message || 'An unexpected error occurred';
+                console.log(error);
+                
+               
                 setTimeout(() => {
                     this.errorImportNodes = false;
                     this.importNodesErrorMessage = "";

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,6 +33,8 @@ public class FileService {
    */
   public void insertExcelFileCalls(InputStream inputStream) throws IOException {
     Workbook workbook = new XSSFWorkbook(inputStream);
+    List<Call> calls = new ArrayList<>();
+
     Sheet sheet = workbook.getSheetAt(0); // Assuming the data is in the first sheet
     // Iterate through each row of the sheet
     for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
@@ -46,13 +49,24 @@ public class FileService {
       String api = row.getCell(5) != null ? row.getCell(5).getStringCellValue() : null;
       String description = row.getCell(6) != null ? row.getCell(6).getStringCellValue() : null;
 
-      // Create a new Relationship object and save it to the database
-      this.callService.addCall(issuer, target, type, topic, eventProduced, api, description);
-    }
-  }
+      // Skip rows with null or empty values for required fields
+      if (issuer == null || issuer.isEmpty() ||
+        target == null || target.isEmpty()) {
+        continue;
+      }
 
+      // Create a new Call object and save it to the database
+      Call newCall = new Call(issuer, target, type, topic, eventProduced, api, description);
+      calls.add(newCall);
+    }
+
+    this.callService.addAll(calls);
+    workbook.close();
+  }
   public void insertExcelFileNodes(InputStream inputStream) throws IOException {
     Workbook workbook = new XSSFWorkbook(inputStream);
+    List<MyNode> nodes = new ArrayList<>();
+
     Sheet sheet = workbook.getSheetAt(0); // Assuming the data is in the first sheet
     // Iterate through each row of the sheet
     for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
@@ -62,10 +76,18 @@ public class FileService {
       String name = row.getCell(0) != null ? row.getCell(0).getStringCellValue() : null;
       String type = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : null;
 
+      // Skip rows with null or empty values for required fields
+      if (name == null || name.isEmpty()) {
+        continue;
+      }
 
-      // Create a new Relationship object and save it to the database
-      nodeService.add(name, type);
+      // Create a new Node object and save it to the database
+      MyNode newNode = new MyNode(name, type);
+      nodes.add(newNode);
     }
+
+    List<MyNode> savedNodes = nodeService.addAll(nodes);
+    workbook.close();
   }
 
   public byte[] exportCallsToExcel() throws IOException {
@@ -103,7 +125,7 @@ public class FileService {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     workbook.write(out);
     byte[] data = out.toByteArray();
-
+    workbook.close();
     // Set the content type and headers
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -141,7 +163,7 @@ public class FileService {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     workbook.write(out);
     byte[] data = out.toByteArray();
-
+    workbook.close();
     // Set the content type and headers
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
