@@ -1,10 +1,12 @@
 FROM node:latest as builder
-ENV BACKEND=http://localhost:8080
+ENV BACKEND=http://localhost:8081
+ENV CLIENT_ID=angular-client
+ENV KEYCLOAK_URL=http://localhost:8080
+ENV REALM=MICROMAP
 EXPOSE 80
 RUN mkdir -p /app
 WORKDIR /app
 COPY . .
-
 RUN npm install --force
 RUN npm run build --prod
 FROM nginx:alpine

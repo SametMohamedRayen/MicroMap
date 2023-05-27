@@ -29,8 +29,8 @@
       <div class="card-header" style="text-align: left;">
         <h4 style="display: inline-block;" class="card-title"> List Of All Available Calls </h4>
         <span style="margin-left: 50%;">
-        <button style="width: 200px; margin-right: 25px; " (click)="exportCalls()" >export calls</button>
-        <button style="width: 200px;background-color: #ef8157;"(click)="deleteAllModal()" >Delete All calls</button>
+        <button *ngIf="isAdmin" style="width: 200px; margin-right: 25px; " (click)="exportCalls()"  >export calls</button>
+        <button *ngIf="isAdmin" style="width: 200px;background-color: #ef8157;"(click)="deleteAllModal()" >Delete All calls</button>
         </span>
       </div>
       <div class="card-body">
@@ -89,12 +89,12 @@
                   {{call.description}}
                 </td>
                 <td>
-                  <button type="button" class="btn btn-danger btn-round" style="background-color: #ef8157; width: auto;" (click)="deleteModal(call.id)">
+                  <button *ngIf="isAdmin" type="button" class="btn btn-danger btn-round" style="background-color: #ef8157; width: auto;" (click)="deleteModal(call.id)">
                     Delete
                 </button>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-primary btn-round" (click)="updateModel(call.id,call.type,call.api,call.topic,call.eventProduced,call.description)">
+                  <button *ngIf="isAdmin" type="button" class="btn btn-primary btn-round" (click)="updateModel(call.id,call.type,call.api,call.topic,call.eventProduced,call.description)">
                     Update
                 </button>
                 </td>

@@ -1,32 +1,35 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.prod';
 import { Observable } from 'rxjs';
 import { Call } from './call';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CallsService {
   private apiServerUrl=environment.apiBaseUrl+"/api/v1";
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient , private keycloakService:KeycloakService) { }
   
   updateCall(id: number, formData:FormData) :Observable<void>{
-    return this.http.put<void>(`${this.apiServerUrl}/call/${id}`,formData);
+    
+    return this.http.put<void>(`${this.apiServerUrl}/call/update/${id}`,formData);
   }
   addCall(formData: FormData) :Observable<Call> {
-    return this.http.post<Call>(`${this.apiServerUrl}/call`,formData);
+    return this.http.post<Call>(`${this.apiServerUrl}/call/add`,formData);
   }
   deleteCall(id: string) :Observable<void> {
-      return this.http.delete<void>(`${this.apiServerUrl}/call/${id}`);
+      return this.http.delete<void>(`${this.apiServerUrl}/call/delete/${id}`);
   }
   deleteAll() :Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/call`);
+    return this.http.delete<void>(`${this.apiServerUrl}/call/delete`);
 }
   public getAllCalls():Observable<Call[]> {
-    return this.http.get<Call[]>(`${this.apiServerUrl}/call`);
+    console.log(this.keycloakService.getToken());
+    return this.http.get<Call[]>(`${this.apiServerUrl}/call/getall`);
 }
 
 

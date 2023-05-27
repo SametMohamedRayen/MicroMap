@@ -17,6 +17,6 @@
       <span class="navbar-toggler-bar navbar-kebab"></span>
       <span class="navbar-toggler-bar navbar-kebab"></span>
     </button>
-    
+    <button *ngIf="isLoggedIn !== undefined && isLoggedIn" type="button" class="btn btn-secondary" (click)="logout()">Log Out</button>  
   </div>
 </nav>

@@ -1,7 +1,8 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from "ngx-toastr";
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 import { SidebarModule } from './sidebar/sidebar.module';
 
@@ -13,6 +14,7 @@ import { AppRoutes } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { FormsModule } from "@angular/forms";
+import { initializeKeycloak } from "./utility/app.init";
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { FormsModule } from "@angular/forms";
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    KeycloakAngularModule,
    
     RouterModule.forRoot(AppRoutes,{
       useHash: true
@@ -31,10 +34,16 @@ import { FormsModule } from "@angular/forms";
     SidebarModule,
     NavbarModule,
     ToastrModule.forRoot(),
+   
 
     FixedPluginModule
   ],
-  providers: [],
+  providers: [ {
+    provide: APP_INITIALIZER,
+    useFactory: initializeKeycloak,
+    multi: true,
+    deps: [KeycloakService]
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

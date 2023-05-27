@@ -1,5 +1,10 @@
 export const environment = {
   production: true,
-  apiBaseUrl:window["env"]["apiUrl"] || "http://localhost:8081"
+  apiBaseUrl: "http://localhost:8081"
+  ,
+  clientId:"angular-client",
+  keycloakUrl: "http://localhost:8080",
+  realm:"MICROMAP"
+
   
 };

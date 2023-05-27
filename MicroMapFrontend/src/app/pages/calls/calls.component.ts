@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { CallsService } from 'app/calls.service';
 import { error } from 'console';
 import { FileService } from 'app/file.service';
+import { KeycloakService } from 'keycloak-angular';
 
 
 
@@ -29,9 +30,15 @@ export class CallsComponent implements OnInit {
     errorLoading =false;
     errorDelete = false;
     errorExport=false;
-    
-    constructor(private callsService: CallsService,private fileService: FileService) { }
+    isAdmin: boolean;
+
+    constructor(private callsService: CallsService,private fileService: FileService ,private keycloakService: KeycloakService) { }
+   
     ngOnInit() {
+      const userRoles: string[] = this.keycloakService.getUserRoles();
+      this.isAdmin = userRoles.includes('admin');
+      
+
         this.callsService.getAllCalls().subscribe({
             next: (response: Call[]) => {
               this.calls = response;

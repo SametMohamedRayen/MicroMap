@@ -4,6 +4,7 @@ import { CallsService } from 'app/calls.service';
 import { NodeService } from 'app/node.service';
 import { error } from 'console';
 import { FileService } from 'app/file.service';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
     selector: 'table-cmp',
@@ -19,13 +20,16 @@ export class NodesComponent implements OnInit {
     errorLoading=false;
     errorDelete=false;
     errorExport=false;
-    
+    isAdmin: boolean;
 
 
-    constructor(private nodeService: NodeService,private fileService : FileService) {
+
+    constructor(private nodeService: NodeService,private fileService : FileService ,private keycloakService: KeycloakService) {
 
     }
     ngOnInit() {
+      const userRoles: string[] = this.keycloakService.getUserRoles();
+      this.isAdmin = userRoles.includes('admin');
         this.nodeService.getAllNodes().subscribe({
           next: (res) => {
             this.nodes = res;

@@ -18,14 +18,14 @@ export class NodeService {
     return this.http.get<string[]>(`${this.apiServerUrl}/node/names`);
   }
   addNode(formData: FormData): Observable<Node> {
-    return this.http.post<Node>(`${this.apiServerUrl}/node`,formData);
+    return this.http.post<Node>(`${this.apiServerUrl}/node/add`,formData);
   }
   deleteNode(name: string) :Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/node/${name}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/node/delete/${name}`);
   }
 
   deleteAll() :Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/node`);
+    return this.http.delete<void>(`${this.apiServerUrl}/node/delete`);
   }
 
  
