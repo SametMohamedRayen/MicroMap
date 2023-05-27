@@ -3,6 +3,7 @@ package com.pfa.microMap.controller;
 import com.pfa.microMap.model.MyNode;
 import com.pfa.microMap.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Set;
 public class NodeController {
   @Autowired
   NodeService nodeService;
+
 
   @GetMapping
   public List<MyNode> getAll() {
@@ -38,12 +40,12 @@ public class NodeController {
     return this.nodeService.add(name, type);
   }
 
-  @DeleteMapping("{name}")
+  @DeleteMapping("/delete/{name}")
   public void delete(@PathVariable String name) {
     this.nodeService.delete(name);
   }
 
-  @DeleteMapping()
+  @DeleteMapping("/delete")
   public void deleteAll() {
     this.nodeService.deleteAll();
   }

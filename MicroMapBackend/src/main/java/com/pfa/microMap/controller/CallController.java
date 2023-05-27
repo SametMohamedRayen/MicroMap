@@ -3,6 +3,7 @@ package com.pfa.microMap.controller;
 import com.pfa.microMap.model.Call;
 import com.pfa.microMap.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,12 +14,14 @@ public class CallController {
   @Autowired
   CallService callService;
 
-  @GetMapping()
+//@PreAuthorize("hasAnyAuthority('ROLE_TEST')")
+  @GetMapping("/getall")
+
   public List<Call> findAllCalls() {
     return this.callService.findAllCalls();
   }
 
-  @PostMapping()
+  @PostMapping("add")
   public Call addCall(
     @RequestPart("startNode") String startNode,
     @RequestPart("endNode") String endNode,
@@ -30,7 +33,7 @@ public class CallController {
     return this.callService.addCall(startNode, endNode, type, topic, eventProduced, api, description);
   }
 
-  @PutMapping("/{id}")
+  @PutMapping("/update/{id}")
   public Call updateCall(@PathVariable("id") Long id,
                          @RequestPart(value = "type", required = false) String type,
                          @RequestPart(value = "topic", required = false) String topic,
@@ -40,12 +43,12 @@ public class CallController {
     return this.callService.updateCall(id, type, topic, eventProduced, api, description);
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/delete/{id}")
   public void deleteCall(@PathVariable Long id) {
     this.callService.deleteCall(id);
   }
 
-  @DeleteMapping()
+  @DeleteMapping("/delete")
   public void deleteAllCalls() {
     this.callService.deleteAllCalls();
   }

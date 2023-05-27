@@ -48,7 +48,8 @@ public class CallService {
                       String description) {
     return this.sharedRepository.addCall(startNode, endNode, type, topic, eventProduced, api, description);
   }
-  public void addAll(List<Call>calls){
+
+  public void addAll(List<Call> calls) {
     List<Map<String, Object>> callProperties = calls.stream()
       .map(callToMapConverter::convert)
       .collect(Collectors.toList());
@@ -59,8 +60,7 @@ public class CallService {
       throw new DataAccessException("Failed to add calls: " + unmatchedNodes) {
 
       };
-      }
-    else {
+    } else {
       this.sharedRepository.addCalls(callProperties);
 
     }

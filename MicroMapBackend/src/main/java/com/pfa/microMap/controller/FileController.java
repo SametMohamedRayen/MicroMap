@@ -27,12 +27,10 @@ public class FileController {
       this.fileService.insertExcelFileCalls(file.getInputStream());
       return ResponseEntity.ok().body("{\"message\": \"Calls added successfully\"}");
     } catch (IOException e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \""+e.getMessage()+"\"}");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"" + e.getMessage() + "\"}");
     } catch (DataAccessException e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \""+e.getMessage()+"\"}");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"" + e.getMessage() + "\"}");
     }
-
-
 
 
   }
@@ -44,11 +42,12 @@ public class FileController {
       this.fileService.insertExcelFileNodes(file.getInputStream());
       return ResponseEntity.ok().body("{\"message\": \"Nodes added successfully\"}");
     } catch (IOException e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \""+e.getMessage()+"\"}");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"" + e.getMessage() + "\"}");
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\": \""+e.getMessage()+"\"}");
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\": \"" + e.getMessage() + "\"}");
     }
   }
+
   @GetMapping(value = "/download/call", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
   public ResponseEntity<?> exportCallsToExcel(HttpServletResponse response) {
     try {
