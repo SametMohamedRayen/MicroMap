@@ -1,12 +1,14 @@
+
+import { environment } from 'environments/environment.prod';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 export function initializeKeycloak(keycloak: KeycloakService) {
     return () =>
       keycloak.init({
         config: {
-          url: 'http://localhost:8080',
-          realm: 'MICROMAP',
-          clientId: 'angular-client'
+          url: environment.keycloakUrl,
+          realm: environment.realm,
+          clientId: environment.clientId
           
         },
         

@@ -3,7 +3,6 @@ package com.pfa.microMap.controller;
 import com.pfa.microMap.model.Call;
 import com.pfa.microMap.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

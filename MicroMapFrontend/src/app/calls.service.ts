@@ -2,10 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment.prod';
 import { Observable } from 'rxjs';
 import { Call } from './call';
 import { KeycloakService } from 'keycloak-angular';
+import { environment } from 'environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
